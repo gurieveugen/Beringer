@@ -1,0 +1,174 @@
+#header .logo{
+	width: auto;
+	top: 8px;
+}
+/* nav */
+.main-nav{
+	padding-right: 0;
+}
+#nav{
+	font-size: 14px;
+}
+#nav a{
+	padding: 0 21px;
+}
+/* nav end */
+/* visual */
+.visual .center-wrap{
+	padding: 85px 15px;
+}
+.visual h2{
+	font-size: 50px;
+	line-height: 52px;
+}
+/* visual end */
+/* updates-block */
+.updates-block:before{
+	background-position: 50% -15px;
+}
+.btn-updates > div{
+	text-align: left;
+	padding: 0 15px;
+}
+.updates-table{
+	width: 600px;
+}
+.updates-table td > div{
+	padding-top: 0;
+}
+.updates-table strong{
+	font-size: 57px;
+	line-height: 50px;
+	margin: 0 0 4px;
+}
+.updates-table span{
+	font-size: 14px;
+	line-height: 17px;
+}
+/* updates-block end */
+/* feed-blocks */
+.feed-blocks .wrap{
+	padding-left: 15px;
+	padding-right: 15px;
+}
+.feed-blocks .a-item{
+	width: 20.5%;
+	margin: 0 0 10px 6%;
+}
+/* feed-blocks end */
+/* section-about */
+.section-about{
+	padding: 37px 0 15px;
+}
+.section-about .image{
+	width: 367px;
+	margin: 0 35px 0 0;
+}
+.section-about .image > div{
+	padding: 13px 13px 0;
+}
+.section-about .content{
+	padding: 5px 0 0;
+}
+/* section-about end */
+/* footer */
+#footer .col{
+	padding: 0 20px 0 45px;
+	width: 395px;
+}
+#footer .col-one{
+	padding: 0 20px 0 0;
+	width: 224px;
+}
+#footer .col-two{
+	padding: 0 20px 0 52px;
+	width: 170px;
+}
+/* footer end */
+
+/* page about */
+#content{
+	width: 700px;
+}
+.main-content .featured-image{
+	margin: 0 0 33px;
+}
+h2{
+	font-size: 38px;
+	line-height: 40px;
+}
+.hgroup h1,
+.hgroup h2{
+	margin: 0 0 7px;
+}
+/* page about end */
+/* page contact */
+.main-contact{
+	padding: 0 0 110px;
+}
+.contact-container{
+	margin: 25px 0 0;
+}
+.contact-form{
+	width: 525px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"]{
+	width: 345px;
+}
+.contact-column{
+	width: 335px;
+}
+/* page contact end */
+/* page news */
+.main-news{
+	padding: 28px 0 94px;
+}
+.posts-holder .a-item .content{
+	padding: 46px 0 12px;
+}
+.posts-holder .a-item.adv .content{
+	padding-left: 30px;
+}
+.posts-holder .a-item.adv .info{
+	padding-right: 50px;
+}
+.posts-holder .a-item h1{
+	font-size: 28px;
+	line-height: 31px;
+}
+/* page news end */
+/* page news detail */
+.news-items{
+	margin: 0 -21px;
+}
+.news-area .b-item{
+	padding: 0 21px;
+}
+/* page news detail end */
+/* page services */
+.services-list{
+	padding: 32px 0 20px;
+}
+.services-list .row{
+	margin: 0 -10px;
+}
+.services-list .s-item{
+	margin: 0 -3px 0 0;
+	padding: 0 10px 27px;
+}
+/* page services end */
+/* page team */
+.team-description{
+	margin: 0 0 38px;
+}
+.team-list .row{
+	margin: 0 -10px;
+}
+.team-list .t-item{
+	height: 301px;
+}
+.team-list [class^="col-"]{
+	padding: 0 10px 48px;
+}
+/* page team end */
