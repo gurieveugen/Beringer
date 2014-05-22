@@ -6,40 +6,69 @@
 
 define('TDU', get_bloginfo('template_url'));
 
+// =========================================================
+// REQUIRE
+// =========================================================
+require_once 'includes/post_type_factory.php';
+
+// =========================================================
+// HOOKS
+// =========================================================
+add_filter('the_content', 'filter_template_url');
+add_filter('get_the_content', 'filter_template_url');
+add_filter('widget_text', 'filter_template_url');
+add_filter('nav_menu_css_class', 'change_menu_classes');
+add_action('wp_enqueue_scripts', 'scripts_method');
+add_filter('the_content', 'template_url');
+add_filter('get_the_content', 'template_url');
+add_filter('widget_text', 'template_url');
+add_filter('default_content', 'theme_default_content');
+
+// =========================================================
+// THEME OPTIONS
+// =========================================================
 add_theme_support( 'automatic-feed-links' );
 add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
-
-register_sidebar(array(
-	'id' => 'left-sidebar',
-	'name' => 'Left Sidebar',
-	'before_widget' => '<div class="widget %2$s" id="%1$s">',
-	'after_widget' => '</div>',
-	'before_title' => '<h3>',
-	'after_title' => '</h3>'
-));
-
 add_theme_support( 'post-thumbnails' );
 
-register_nav_menus( array(
-	'primary_nav' => __( 'Primary Navigation', 'theme' ),
-	'bottom_nav' => __( 'Bottom Navigation', 'theme' )
-) );
+// =========================================================
+// SIDEBARS & MENUS
+// =========================================================
+register_sidebar(array(
+	'id'            => 'left-sidebar',
+	'name'          => 'Left Sidebar',
+	'before_widget' => '<div class="widget %2$s" id="%1$s">',
+	'after_widget'  => '</div>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>'));
 
-function change_menu_classes($css_classes){
+register_nav_menus(array(
+	'primary_nav' => __('Primary Navigation', 'theme'),
+	'bottom_nav'  => __('Bottom Navigation', 'theme')));
+
+// =========================================================
+// PEOPLE POST TYPE
+// =========================================================
+$GLOBALS['people'] = new PostTypeFactory('People', array('icon_code' => 'f0c0'));
+$GLOBALS['people']->addMetaBox('Contacts', array(
+	'Email'  => 'email',
+	'Phones' => array('table', array('title', 'phone')),
+	'Adress' => 'textarea'));
+
+function change_menu_classes($css_classes)
+{
 	$css_classes = str_replace("current-menu-item", "current-menu-item active", $css_classes);
 	$css_classes = str_replace("current-menu-parent", "current-menu-parent active", $css_classes);
 	return $css_classes;
 }
-add_filter('nav_menu_css_class', 'change_menu_classes');
 
-function filter_template_url($text) {
+function filter_template_url($text) 
+{
 	return str_replace('[template-url]',get_bloginfo('template_url'), $text);
 }
-add_filter('the_content', 'filter_template_url');
-add_filter('get_the_content', 'filter_template_url');
-add_filter('widget_text', 'filter_template_url');
 
-function theme_paging_nav() {
+function theme_paging_nav() 
+{
 	global $wp_query;
 
 	// Don't print empty markup if there's only one page.
@@ -61,7 +90,9 @@ function theme_paging_nav() {
 	</nav><!-- .navigation -->
 	<?php
 }
-function theme_post_nav() {
+
+function theme_post_nav() 
+{
 	global $post;
 
 	// Don't print empty markup if there's nowhere to navigate.
@@ -82,7 +113,9 @@ function theme_post_nav() {
 	</nav><!-- .navigation -->
 	<?php
 }
-function theme_entry_date( $echo = true ) {
+
+function theme_entry_date( $echo = true ) 
+{
 	if ( has_post_format( array( 'chat', 'status' ) ) )
 		$format_prefix = _x( '%1$s on %2$s', '1: post format name. 2: date', 'theme' );
 	else
@@ -100,7 +133,9 @@ function theme_entry_date( $echo = true ) {
 
 	return $date;
 }
-function theme_entry_meta() {
+
+function theme_entry_meta() 
+{
 	if ( is_sticky() && is_home() && ! is_paged() )
 		echo '<span class="featured-post">' . __( 'Sticky', 'theme' ) . '</span>';
 
@@ -128,23 +163,23 @@ function theme_entry_meta() {
 		);
 	}
 }
-function scripts_method() {
+
+function scripts_method() 
+{
 	wp_deregister_script( 'jquery' );
 	wp_register_script( 'jquery', TDU.'/js/jquery-1.11.0.min.js');
 	wp_enqueue_script( 'jquery' );
 }
-add_action('wp_enqueue_scripts', 'scripts_method');
 
 // register tag [template-url]
-function template_url($text) {
+function template_url($text) 
+{
 	return str_replace('[template-url]',get_bloginfo('template_url'), $text);
 }
-add_filter('the_content', 'template_url');
-add_filter('get_the_content', 'template_url');
-add_filter('widget_text', 'template_url');
 
-function theme_default_content( $content ) {
+
+function theme_default_content( $content ) 
+{
 	$content = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices, magna non porttitor commodo, massa nibh malesuada augue, non viverra odio mi quis nisl. Nullam convallis tincidunt dignissim. Nam vitae purus eget quam adipiscing aliquam. Sed a congue libero. Quisque feugiat tincidunt tortor sed sodales. Etiam mattis, justo in euismod volutpat, ipsum quam aliquet lectus, eu blandit neque libero eu justo. Nunc nibh nulla, accumsan in imperdiet vel, pretium in metus. Aenean in lacus at lacus imperdiet euismod in non nulla. Mauris luctus sodales metus, ac porttitor est lacinia non. Proin diam urna, feugiat at adipiscing in, varius vel mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed tincidunt commodo massa interdum iaculis.</p><!--more--><p>Aliquam metus libero, elementum et malesuada fermentum, sagittis et libero. Nullam quis odio vel ipsum facilisis viverra id sit amet nibh. Vestibulum ullamcorper luctus lacinia. Etiam accumsan, orci eu blandit vestibulum, purus ante malesuada purus, non commodo odio ligula quis turpis. Vestibulum scelerisque feugiat diam, eu mollis elit cursus nec. Quisque commodo ultricies scelerisque. In hac habitasse platea dictumst. Nullam hendrerit rhoncus lacus, id lobortis leo condimentum sed. Nulla facilisi. Quisque ut velit a neque feugiat rutrum at sit amet neque. Sed at libero dictum est aliquam porttitor. Morbi tempor nulla ut tellus malesuada cursus condimentum metus luctus. Quisque dui neque, lobortis id vehicula et, tincidunt eget justo. Morbi vulputate velit eget leo fermentum convallis. Nam mauris risus, consectetur a posuere ultricies, elementum non orci.</p><p>Ut viverra elit vel mauris venenatis gravida ut quis mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend urna sit amet nisi scelerisque pretium. Nulla facilisi. Donec et odio vel sem gravida cursus vestibulum dapibus enim. Pellentesque eget aliquet nisl. In malesuada, quam ac interdum placerat, elit metus consequat lorem, non consequat felis ipsum et ligula. Sed varius interdum volutpat. Vestibulum et libero nisi. Maecenas sit amet risus et sapien lobortis ornare vel quis ipsum. Nam aliquet euismod aliquam. Donec velit purus, convallis ac convallis vel, malesuada vitae erat.</p>";
 	return $content;
 }
-add_filter('default_content', 'theme_default_content');
