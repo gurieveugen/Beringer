@@ -57,11 +57,13 @@
 .hgroup h2{
 	margin: 0 0 5px;
 }
-.main-content ul{
+.main-content ul,
+.td-content ul{
 	padding: 10px 0 10px 4px;
 	font-size: 18px;
 }
-.main-content ul li{
+.main-content ul li,
+.td-content ul li{
 	padding: 0 0 0 18px;
 	margin-top: 7px;
 	background-position: 0 10px;
@@ -122,3 +124,54 @@
 	margin: 0 auto;
 }
 /* page team end */
+/* page team detail */
+.td-column .image{
+	margin: 0 0 12px;
+}
+.contact-block-xs{
+	font-size: 19px;
+}
+.contact-block-xs h4{
+	font-size: 25px;
+	line-height: 28px;
+	margin: 32px 0 20px;
+}
+.td-content{
+	padding: 28px 0 0;
+}
+.titles h3{
+	font-size: 25px;
+	line-height: 28px;
+}
+.td-section .decor-line{
+	margin: 0 0 30px;
+}
+/* page team detail end */
+/* page transctions */
+.main-transactions{
+	padding: 17px 12px 40px;
+}
+.filter-row{
+	padding: 0 10px;
+	margin: 0 0 30px;
+}
+.a-item .col-logo{
+	display: table-cell;
+}
+.main-transactions .page-description{
+	margin: 0 0 25px;
+}
+.transactions-list{
+	padding: 0 10px;
+}
+.a-item.adv-t{
+	padding: 43px 13px 25px 13px;
+}
+.a-item .col-text,
+.a-item .col-info{
+	width: 34%;
+}
+.a-item.adv-t .logo{
+	display: none;
+}
+/* page transctions end */

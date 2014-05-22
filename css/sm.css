@@ -195,7 +195,7 @@ h2{
 .a-item.adv{
 	padding: 50px 10px 60px 20px;
 }
-.a-item.adv .info{
+.a-item .info{
 	display: block;
 	padding: 20px 10px 20px 0;
 }
@@ -299,6 +299,7 @@ h2{
 h1{
 	font-size: 30px;
 	line-height: 33px;
+	margin: 0 0 16px;
 }
 .hgroup h1,
 .hgroup h2{
@@ -378,16 +379,16 @@ h1{
 .contact-column .col{
 	margin: 0 0 24px;
 }
-.contact-column dl{
-	padding: 8px 0 30px;
+.contact-list{
 	line-height: 26px;
+	padding: 6px 0 0;
 }
-.contact-column dl dt{
+.contact-list dt{
 	float: left;
 	clear: left;
 	margin: 0 4px 0 0;
 }
-.contact-column dl dd{
+.contact-list dd{
 	float: left;
 	margin: 0;
 	font-family: LatoBold, Arial, Helvetica, sans-serif;
@@ -476,18 +477,15 @@ h1{
 .news-area {
 	padding: 0 0 40px;
 }
-.news-area hgroup{
-	padding: 0 0 40px;
+.titles{
+	text-align: left;
 }
-.news-area h3{
+.news-area .titles{
+	padding: 0 0 37px;
+}
+.titles h3{
 	font: 25px/30px Georgia, 'Times New Roman', Times, serif;
-	color: #611d25;
-	margin: 0 0 5px;
-}
-.news-area h4{
-	color: #cacaca;
-	font: 21px/25px LatoLight, Arial, Helvetica, sans-serif;
-	margin: 0 0 5px;
+	margin: 0 0 4px;
 }
 .news-items{
 	margin: 0 -15px;
@@ -543,11 +541,10 @@ h1{
 .main-team{
 	padding: 25px 0 70px;
 }
-.team-description{
+.page-description{
 	margin: 0 0 32px;
-	border-bottom: 1px solid #eee;
 }
-.team-description h1 {
+.page-description h1 {
 	font-size: 38px;
 	line-height: 41px;
 	margin: 0 0 16px;
@@ -577,3 +574,110 @@ h1{
 	padding: 10px;
 }
 /* page team end */
+/* page team detail */
+.main-team-detail{
+	padding: 30px 0 130px 10px;
+}
+.td-column{
+	float: left;
+	width: 350px;
+	margin: 4px 40px 0 0;
+}
+.td-column .image{
+	margin: 0 0 20px;
+}
+.td-content{
+	overflow: hidden;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+.hgroup h5{
+	font: 16px/20px 'LatoLight', Arial, Helvetica, sans-serif;
+	margin: 0 0 4px;
+}
+.td-text{
+	border-top: 1px solid #eee;
+	padding: 28px 0 0;
+}
+.td-section .decor-line{
+	margin: 0 0 20px;
+}
+.td-section .titles{
+	padding: 0 0 10px;
+}
+/* page team detail end */
+/* page transctions */
+.main-transactions{
+	padding: 17px 0 60px;
+}
+.filter-row{
+	padding: 0;
+}
+.filter-row .filter{
+	float: right;
+}
+.filter label{
+	float: left;
+	margin: 7px 20px 0 0;
+	font: 12px/15px Georgia,'Times New Roman',Times,serif;
+}
+.filter .jq-selectbox{
+	float: left;
+	width: 194px;
+	line-height: 28px;
+}
+.jq-selectbox__select{
+	height: 28px;
+	font-size: 12px;
+	line-height: 26px;
+	padding: 0 40px 0 10px;
+}
+.jq-selectbox__trigger{
+	width: 25px;
+}
+.jq-selectbox__dropdown{
+	font-size: 12px;
+	line-height: 15px;
+	top: 28px;
+}
+.transactions-list{
+	padding: 0;
+	margin: 0 -71px 0 0;
+}
+.transactions-list .a-item{
+	float: left;
+	width: 195px;
+	margin: 0 70px 37px 0;
+}
+.a-item.adv-t{
+	height: 276px;
+	padding: 30px 13px 25px;
+}
+.a-item.adv-t .info{
+	padding: 17px 0;
+}
+.a-item.adv-t .a-date{
+	top: 14px;
+	padding: 0 12px;
+	font-size: 10px;
+	line-height: 16px;
+}
+.a-item .col{
+	display: block;
+}
+.a-item .col-text,
+.a-item .col-info{
+	width: auto;
+}
+.a-item .col-text{
+	margin: 5px 0 0;
+}
+.a-item.adv-t .link-holder{
+	left: 0;
+	right: 0;
+	bottom: 17px;
+	padding: 0 0 0 15px;
+	text-align: center;
+}
+/* page transctions end */

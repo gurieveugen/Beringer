@@ -81,7 +81,7 @@
 }
 /* page services end */
 /* page team */
-.team-description{
+.page-description{
 	margin: 0 27px 38px;
 }
 .team-list{
@@ -100,3 +100,14 @@
 	padding: 10px 30px 30px;
 }
 /* page team end */
+/* page transctions */
+.main-transactions{
+	padding: 27px 0 60px 28px;
+}
+.transactions-list{
+	padding: 0 0 0 10px;
+}
+.transactions-list .a-item{
+	margin: 0 39px 38px 0;
+}
+/* page transctions end */

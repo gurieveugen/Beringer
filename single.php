@@ -7,44 +7,66 @@
 ?>
 <?php get_header(); ?>
 
-<article id="content">
-
-<?php while ( have_posts() ) : the_post(); ?>
-
-	<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-		<h1 class="entry-title"><?php the_title(); ?></h1>
-		<div class="entry-meta">
-			Posted on 
-			<a href="<?php the_permalink() ?>" rel="bookmark">
-				<span class="entry-date"><?php the_date() ?></span>
-			</a> 
-			by 
-			<span class="author vcard">
-				<a href="<?php echo get_author_posts_url(get_the_author_meta('ID')) ?>"><?php the_author() ?></a>
-			</span>
-		</div>
-
-		<div class="entry-content">
-			<?php the_content(); ?>
-			<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'theme' ) . '</span>', 'after' => '</div>' ) ); ?>
-		</div>
-
-		<div class="entry-meta">
-			<?php theme_entry_meta(); ?>
-			<?php edit_post_link( 'Edit' , '<span class="edit-link">', '</span>' ); ?>
-		</div>
+<?php if ( have_posts() ) : the_post(); ?>
+<div class="breadcrumbs-area hidden-xs">
+	<div class="center-wrap cf">
+		<ul class="breadcrumbs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li>Page Name</li>
+		</ul>
 	</div>
+</div>
+<header class="page-title visible-xs">
+	<h1>News</h1>
+</header>
+<div class="main-single center-wrap cf">
+	<h1 class="p-title hidden-xs">News</h1>
+	<article class="single-article">
+		<span class="a-date"><?php the_date() ?></span>
+		<h1><?php the_title(); ?></h1>
+		<?php the_content(); ?>
+		<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'theme' ) . '</span>', 'after' => '</div>' ) ); ?>
+	</article>
+	<section class="news-area hidden-xs">
+		<div class="titles">
+			<h3>OTHER NEWS</h3>
+			<h4>Sub heading for education section that will lead the user.</h4>
+		</div>
+		<div class="news-items row">
+			<article class="b-item col-sm-4">
+				<span class="a-date">April 14, 2014</span>
+				<div class="content">
+					<h1><a href="#">This is a title of news that goes here in this spot</a></h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisic itation ullamco laboris nisi ut aliquip ex ea comm odo consequat. Duis aute irure dolor in reprehen teur sint occaecat cupidatat non p.</p>
+					<div class="link-holder">
+						<a href="#" class="link-more">Read more</a>
+					</div>
+				</div>
+			</article>
+			<article class="b-item col-sm-4">
+				<span class="a-date">April 14, 2014</span>
+				<div class="content">
+					<h1><a href="#">This is a title of news that goes here in this spot</a></h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisic itation ullamco laboris nisi ut aliquip ex ea comm odo consequat. Duis aute irure dolor in reprehen teur sint occaecat cupidatat non p.</p>
+					<div class="link-holder">
+						<a href="#" class="link-more">Read more</a>
+					</div>
+				</div>
+			</article>
+			<article class="b-item col-sm-4">
+				<span class="a-date">April 14, 2014</span>
+				<div class="content">
+					<h1><a href="#">This is a title of news that goes here in this spot</a></h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisic itation ullamco laboris nisi ut aliquip ex ea comm odo consequat. Duis aute irure dolor in reprehen teur sint occaecat cupidatat non p.</p>
+					<div class="link-holder">
+						<a href="#" class="link-more">Read more</a>
+					</div>
+				</div>
+			</article>
+		</div>
+	</section>
+</div>
+<?php endif; ?>
 
-	<div id="nav-below" class="navigation nav-single">
-		<span class="nav-previous"><?php previous_post_link( '%link', __( '<span class="meta-nav">&larr;</span> Previous Entry: %title', 'theme' ) ); ?></span>
-		<span class="nav-next"><?php next_post_link( '%link', __( 'Next Entry: %title <span class="meta-nav">&rarr;</span>', 'theme' ) ); ?></span>
-	</div>
-	
-	<?php comments_template( '', true ); ?>
-
-<?php endwhile; ?>
-
-</article>
-
-<?php get_sidebar(); ?>
 <?php get_footer(); ?>

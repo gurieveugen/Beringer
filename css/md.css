@@ -93,9 +93,10 @@
 .main-content .featured-image{
 	margin: 0 0 33px;
 }
+h1,
 h2{
 	font-size: 38px;
-	line-height: 40px;
+	line-height: 41px;
 }
 .hgroup h1,
 .hgroup h2{
@@ -159,7 +160,7 @@ h2{
 }
 /* page services end */
 /* page team */
-.team-description{
+.page-description{
 	margin: 0 0 38px;
 }
 .team-list .row{
@@ -172,3 +173,18 @@ h2{
 	padding: 0 10px 48px;
 }
 /* page team end */
+
+/* page transctions */
+.main-transactions{
+	padding: 27px 0 60px;
+}
+.main-transactions .page-description{
+	margin: 0 0 35px;
+}
+.transactions-list{
+	padding: 0 0 0 12px;
+}
+.transactions-list .a-item{
+	margin: 0 45px 38px 0;
+}
+/* page transctions end */

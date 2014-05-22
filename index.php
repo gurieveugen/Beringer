@@ -5,7 +5,20 @@
  */
 ?>
 <?php get_header(); ?>
-	<div id="content" role="main">
-		<?php include("loop.php"); ?>
+<div class="breadcrumbs-area hidden-xs">
+	<div class="center-wrap cf">
+		<ul class="breadcrumbs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">About</a></li>
+			<li>Page Name</li>
+		</ul>
 	</div>
+</div>
+<header class="page-title visible-xs">
+	<h1 class="archive-title">Blog</h1>
+</header>
+<div class="main-news center-wrap cf">
+	<h1 class="p-title hidden-xs">Blog</h1>
+	<?php include("loop.php"); ?>
+</div>
 <?php get_footer(); ?>

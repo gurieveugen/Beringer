@@ -10,42 +10,22 @@
 <div class="posts-holder">
 <?php while ( have_posts() ) : the_post(); ?>
 
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-		<header class="entry-header">
-			<?php if ( has_post_thumbnail() && ! post_password_required() ) : ?>
-			<div class="entry-thumbnail">
-				<?php the_post_thumbnail(); ?>
-			</div>
-			<?php endif; ?>
-	
-			<h1><a href="<?php the_permalink(); ?>" rel="bookmark"><?php the_title(); ?></a></h1>
-	
-			<div class="entry-meta">
-				<?php theme_entry_meta(); ?>
-				<?php edit_post_link( __( 'Edit', 'theme' ), '<span class="edit-link">', '</span>' ); ?>
-			</div>
-		</header>
-	
-		<div class="entry-content">
-			<?php
+	<article id="post-<?php the_ID(); ?>" class="a-item">
+		<span class="a-date"><?php the_time('F d, Y'); ?></span>
+		<div class="content">
+			<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+			<?php 
 				if(strpos($post->post_content, '<!--more-->'))
 					the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'theme' ) );
 				else {
 					the_excerpt();
 				}
-				
-				wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'theme' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) );
-			?>
+			 ?>
+			<div class="link-holder">
+				<a href="<?php the_permalink(); ?>" class="link-more">Read more</a>
+			</div>
 		</div>
-	
-		<footer class="entry-meta">
-			<?php if ( comments_open() && ! is_single() ) : ?>
-				<div class="comments-link">
-					<?php comments_popup_link( '<span class="leave-reply">' . __( 'Leave a comment', 'theme' ) . '</span>', __( 'One comment so far', 'theme' ), __( 'View all % comments', 'theme' ) ); ?>
-				</div>
-			<?php endif; ?>
-		</footer>
-	</article><!-- #post -->
+	</article>
 
 <?php endwhile; ?>
 </div> <!-- .posts-holder -->

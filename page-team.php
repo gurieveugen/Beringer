@@ -19,7 +19,7 @@
 	<h1><?php the_title(); ?></h1>
 </header>
 <div class="main-team center-wrap">
-	<div class="hidden-xs team-description">
+	<div class="hidden-xs page-description">
 		<h1><?php the_title(); ?></h1>
 		<?php the_content(); ?>
 		<?php wp_link_pages( array( 'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'theme' ) . '</span>', 'after' => '</div>', 'link_before' => '<span>', 'link_after' => '</span>' ) ); ?>
