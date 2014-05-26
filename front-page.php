@@ -6,12 +6,17 @@
 ?>
 
 <?php get_header(); ?>
+<?php 
+$options = $GLOBALS['theme_options']->getAll();
+$fields  = fillArray(array('million_in_aum', 'member_aboard', 'buyouts', 'company_board_sets'), $options['options']);
+extract($fields);
+?>
 
 <section class="visual">
 	<div class="center-wrap">
 		<h2>Idea Driven Nordic Corporate Finance</h2>
 		<p>Our goal is to become the pre-eminent private finance firm <br class="hidden-xs">focused on the Nordic lower middle market</p>
-		<a href="#" class="btn-large w-234">View Our Story</a>
+		<a href="<?php echo get_bloginfo('url'); ?>/our-story" class="btn-large w-234">View Our Story</a>
 	</div>
 	<!-- 480xauto image for small screens -->
 	<div class="image visible-xs" style="background-image: url(/wp-content/themes/beringer/images/img-xs.jpg);"></div>
@@ -19,7 +24,7 @@
 	<div class="image hidden-xs" style="background-image: url(/wp-content/themes/beringer/images/img.jpg);"></div>
 </section>
 <section class="updates-block wrap cf">
-	<a href="#" class="btn-updates">
+	<a href="<?php echo get_bloginfo('url'); ?>/transactions/" class="btn-updates">
 		<div>
 			<img src="<?php echo TDU; ?>/images/icon.png" alt="">
 			<div class="holder">
@@ -32,109 +37,107 @@
 		<tr>
 			<td>
 				<div>
-					<strong>€420</strong>
+					<strong><?php echo $million_in_aum; ?></strong>
 					<span>million in AUM</span>
 				</div>
 			</td>
 			<td>
 				<div>
-					<strong>85</strong>
+					<strong><?php echo $member_aboard; ?></strong>
 					<span>member aboard</span>
 				</div>
 			</td>
 			<td>
 				<div>
-					<strong>50</strong>
+					<strong><?php echo $buyouts; ?></strong>
 					<span>buyouts</span>
 				</div>
 			</td>
 			<td>
 				<div>
-					<strong>50</strong>
+					<strong><?php echo $company_board_sets; ?></strong>
 					<span>company board sets</span>
 				</div>
 			</td>
 		</tr>
 	</table>
 </section>
-<section class="feed-blocks">
-	<div class="wrap cf">
-		<article class="a-item">
-			<span class="a-date">April 14, 2014</span>
-			<div class="content">
-				<h1>This is a title of news that goes here in this spot</h1>
-				<p>Lorem ipsum dolor sit am et, consectetur adipisi cin elit, sed do eiusm.</p>
-				<div class="link-holder">
-					<a href="#" class="link-more">Read more</a>
+<?php 
+$feed_items = getFeedBlockItems(); 
+if($feed_items)
+{
+	?>
+	<section class="feed-blocks">
+		<div class="wrap cf">
+		<?php
+		foreach ($feed_items as &$item) 
+		{
+			$link  = get_permalink($item->ID);
+			$time  = date('F j, Y', strtotime($item->post_date));			
+			if(isset($item->meta['deal_featured']))
+			{
+				?>
+				<article class="a-item adv">
+					<span class="a-date"><?php echo $time; ?></span>
+					<div class="content">
+						<h1><?php echo $item->post_title; ?></h1>
+						<div class="link-holder">
+							<a href="<?php echo $link; ?>" class="link-more">More About Deal</a>
+						</div>
+					</div>
+					<div class="info">
+						<h3><?php echo $item->meta->deal_cost; ?></h3>
+						<p>Advise to Seller</p>
+					</div>
+					<span class="angle"></span>
+				</article>
+				<?php
+			}
+			else
+			{
+				?>
+				<article class="a-item">
+					<span class="a-date"><?php echo $time; ?></span>
+					<div class="content">
+						<h1><?php echo $item->post_title; ?></h1>
+						<p><?php echo wp_trim_words($item->post_content, 12); ?></p>
+						<div class="link-holder">
+							<a href="<?php echo $link; ?>" class="link-more">Read more</a>
+						</div>
+					</div>
+				</article>
+				<?php	
+			}	
+		}
+		?>
+		</div>
+	</section>
+	<?php
+}
+?>
+<?php 
+$featured_page = getFeaturedPage(); 
+if($featured_page)
+{
+	?>
+	<section class="section-about bg-grey">
+		<div class="center-wrap cf">
+			<div class="image">
+				<div>
+					<a href="<?php echo $featured_page['link']; ?>">
+						<?php echo $featured_page['img']; ?>
+					</a>
 				</div>
 			</div>
-		</article>
-		<article class="a-item adv">
-			<span class="a-date">April 14, 2014</span>
-			<div class="content">
-				<h1>Direct share issue to Bure Equity AB</h1>
-				<div class="link-holder">
-					<a href="#" class="link-more">More About Deal</a>
-				</div>
-			</div>
-			<div class="info">
-				<h3>SEK 36 million</h3>
-				<p>Advise to Seller</p>
-			</div>
-			<span class="angle"></span>
-		</article>
-		<article class="a-item">
-			<span class="a-date">April 14, 2014</span>
-			<div class="content">
-				<h1>This is a title of news that goes here in this spot</h1>
-				<p>Lorem ipsum dolor sit am et, consectetur adipisi cin elit, sed do eiusm.</p>
-				<div class="link-holder">
-					<a href="#" class="link-more">Read more</a>
-				</div>
-			</div>
-		</article>
-		<article class="a-item hidden-sm">
-			<span class="a-date">April 14, 2014</span>
-			<div class="content">
-				<h1>This is a title of news that goes here in this spot</h1>
-				<p>Lorem ipsum dolor sit am et, consectetur adipisi cin elit, sed do eiusm.</p>
-				<div class="link-holder">
-					<a href="#" class="link-more">Read more</a>
-				</div>
-			</div>
-		</article>
-		<article class="a-item adv visible-lg">
-			<span class="a-date">April 14, 2014</span>
-			<div class="content">
-				<br>
-				<h1>Public offer by Danir</h1>
-				<div class="link-holder">
-					<a href="#" class="link-more">More About Deal</a>
-				</div>
-			</div>
-			<div class="info">
-				<h3>SEK 36 million</h3>
-				<p>Advise to Seller</p>
-			</div>
-			<span class="angle"></span>
-		</article>
-	</div>
-</section>
-<section class="section-about bg-grey">
-	<div class="center-wrap cf">
-		<div class="image">
-			<div>
-				<a href="#">
-					<img src="<?php echo TDU; ?>/images/img-1.jpg" alt="">
-				</a>
+			<div class="content">				
+				<h2><?php echo strtoupper($featured_page['title']); ?></h2>
+				<?php echo $featured_page['content']; ?>
 			</div>
 		</div>
-		<div class="content">
-			<h2>OUR STORY</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco lab oris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volu ptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			<p>Incididunt mollit dolore pariatur. officia dolore aute nulla anim magna consectetur nulla commo do ipsum nulla laboris est eu culpa sint undefined ut. <a href="#">Learn more about us</a></p>
-		</div>
-	</div>
-</section>
+	</section>
+	<?php
+}
+?>
+
 
 <?php get_footer(); ?>

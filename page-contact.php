@@ -5,6 +5,11 @@
 */
 ?>
 <?php get_header(); ?>
+<?php 
+$options = $GLOBALS['theme_options']->getAll();
+$fields  = fillArray(array('address', 'email', 'tel_stockholm', 'tel_reykjavik'), $options['contact_options']);
+extract($fields);
+?>
 <?php if ( have_posts() ) : the_post(); ?>
 <header class="page-title visible-xs">
 	<h1><?php the_title(); ?></h1>
@@ -25,16 +30,16 @@
 		<div class="contact-column hidden-xs">
 			<div class="col">
 				<h4>Beringer Finance</h4>
-				<address>Birger Jarlsgatan 4 <br>114 34 Stockholm</address>
-				<strong><a href="mailto:info@beringerfinance.com">info@beringerfinance.com</a></strong>
+				<address><?php echo $address; ?></address>
+				<strong><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></strong>
 			</div>
 			<div class="col">
 				<h4>Phone:</h4>
 				<dl class="cf contact-list">
 					<dt>Tel (Stockholm):</dt>
-					<dd>+46 8 551 182 20</dd>
+					<dd><?php echo $tel_stockholm; ?></dd>
 					<dt>Tel (Reykjavik):</dt>
-					<dd>+46 31 760 80 75</dd>
+					<dd><?php echo $tel_reykjavik; ?></dd>
 				</dl>
 			</div>
 		</div>

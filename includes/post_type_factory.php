@@ -47,7 +47,18 @@ class PostTypeFactory{
 
         add_action('save_post', array(&$this, 'savePost'));
         add_action('post_edit_form_tag', function() { echo ' enctype="multipart/form-data"'; });     
-        wp_enqueue_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');   
+        add_action('admin_enqueue_scripts', array(&$this, 'adminScriptsAndStyles'));
+        
+
+    }
+
+    /**
+     * Add scripts and styles to admin panel
+     */
+    public function adminScriptsAndStyles()
+    {
+        wp_enqueue_style('font-awesome', '//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css');
+        wp_enqueue_script('post_type_factory', get_bloginfo('template_url').'/js/post_type_factory.js', array('jquery'));
     }
 
     /**
@@ -199,15 +210,19 @@ class PostTypeFactory{
 			"text"     => "%s",
 			"email"    => "%s",
 			"textarea" => "%s",
-			"checkbox" => "%s",
+			"checkbox" => '<i class="fa %s"></i>',
 			"select"   => '%s',
-			"file"     => "%s");
+			"file"     => "%s",
+            'table'    => "%s");
 
         if(isset($this->meta_box_form_fields[$column]))
         {
             $meta = get_post_meta($post_id, $this->formatControlName($column), true);
             $type = $this->meta_box_form_fields[$column];
-            printf($display_types[$type], $meta);
+            $type = is_array($type) ? $type[0] : $type;    
+            $out  = is_array($meta) ? sprintf('items (%s)', count($meta)) : $meta;      
+            $out  = $type == 'checkbox' ? $this->circleCheckbox($meta) : $meta; 
+            printf($display_types[$type], $out);
         }       
     }
 
@@ -308,7 +323,7 @@ class PostTypeFactory{
                     // update the value to false to blank in the table. Hmm...
                     if (!isset($_POST[$form_name])) $_POST[$form_name] = '';
                     if (isset($post->ID) ) 
-                    {
+                    {                       
                         update_post_meta($post->ID, $form_name, $_POST[$form_name]);
                     }
                 }
@@ -392,17 +407,16 @@ class PostTypeFactory{
      */
     private function getControl($type, $name, $value, $items = null)
     {
-    	var_dump($items);
-    	$array_types = array('select', 'table');
-    	$text_types  = array(
+    	$types  = array(
             'text'     => '<input type="text" name="%1$s" value="%2$s" class="widefat" />',
             'email'    => '<input type="email" name="%1$s" value="%2$s" class="widefat" />',
             'textarea' => '<textarea name="%1$s" class="widefat" rows="10">%2$s</textarea>',
-            'checkbox' => '<input type="checkbox" name="%1$s" value="$name" ' . $this->checked(!empty($value)) . ' />', 
-            'select'   => $this->getSelectControl($name, $items, $value),               
+            'checkbox' => '<input type="checkbox" name="%1$s" value="%1$s" ' . $this->checked(!empty($value)) . ' />', 
+            'select'   => $this->getSelectControl($name, $items, $value), 
+            'table'    => $this->getTableControl($name, $items, $value),
             'file'     => '<input type="file" name="%1$s" id="%1$s" />');
-
-    	return sprintf($text_types[$type], $name, $value);
+        
+    	return sprintf($types[$type], $name, $value);
     }
 
     /**
@@ -414,17 +428,40 @@ class PostTypeFactory{
      */
     private function getTableControl($name, $columns, $rows)
     {
-    	if(!$rows OR !$columns) return '';
-    	$thead = implode('</th><th>', $columns).'###end';
-    	$thead = sprintf('<tr>%s</tr>', str_replace('<th>###end', '', $thead));
+    	if(!$columns) return '';
 
-    	foreach ($rows as $row_key => $row_val) 
-    	{
-    		foreach ($row_val as $field_key => $field_val) 
-    		{
-    			
-    		}
-    	}
+        $thead   = '';
+        $tbody   = '';
+        $rows    = unserialize($rows);
+        $row     = '';
+        $last_id = 0;        
+
+        foreach ($columns as &$col) 
+        {
+            $thead.= sprintf('<th data-name="%1$s">%1$s</th>', ucwords($col));
+        }
+        $thead.= '<th data-name="remove-button" style="width: 50px;">Remove</th>';
+        if($rows)
+        {
+            foreach ($rows as $row_key => $row_val) 
+            {                
+                $last_id = $row_key;
+                foreach ($row_val as $field_key => $field_val) 
+                {
+                    $col_name = sprintf('%1$s[%2$s][%3$s]', $name, $last_id, $field_key);
+                    $row     .= sprintf('<td><input type="text" class="widefat" name="%s" value="%s"></td>', $col_name, $field_val);
+                }
+                $row_id     = sprintf('%s-row-%s', $name, $last_id);
+                $remove_btn = sprintf('<button type="button" class="button remove-btn" data-row-id="%s"><i class="fa fa-times"></i></button>', $row_id);
+                $tbody      .= sprintf('<tr id="%1$s">%2$s<td>%3$s</td></tr>',  $row_id, $row, $remove_btn);
+                $row        = '';
+            }    
+        }
+        $button = sprintf('<td><button type="button" class="button add-table-item">%s</button></td>', __('Add'));
+        $thead  = sprintf('<thead><tr>%s</tr></thead>', $thead);
+        $tbody .= sprintf('<tr class="footer">%s %s</tr>', $button, str_repeat('<td></td>', (count($columns)-1))); 
+        $tbody  = sprintf('<tbody>%s</tbody>', $tbody);
+        return sprintf('<table id="%1$s" class="widefat" data-columns-count="%4$d" data-last-id="%5$d">%2$s %3$s</table>', $name, $thead, $tbody, count($columns), $last_id);
     }
 
     /**
@@ -454,6 +491,17 @@ class PostTypeFactory{
     {
     	if($yes) return 'checked="checked"';
     	return '';
+    }
+
+    /**
+     * Helper for checkbox control in admin table
+     * @param  string $val --- value
+     * @return string      --- css class
+     */
+    public function circleCheckbox($val)
+    {
+        if(is_array($val)) return $val;
+        return $val == '' ? 'fa-circle-thin' : 'fa-circle';
     }
 
     /**

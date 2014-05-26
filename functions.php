@@ -10,6 +10,8 @@ define('TDU', get_bloginfo('template_url'));
 // REQUIRE
 // =========================================================
 require_once 'includes/post_type_factory.php';
+require_once 'includes/page_factory.php';
+require_once 'includes/lorem_posts.php';
 
 // =========================================================
 // HOOKS
@@ -23,13 +25,19 @@ add_filter('the_content', 'template_url');
 add_filter('get_the_content', 'template_url');
 add_filter('widget_text', 'template_url');
 add_filter('default_content', 'theme_default_content');
+add_shortcode('peoples', 'displayPeoples');
+add_shortcode('deals', 'displayDeals');
+add_shortcode('other_news', 'displayOtherNews');
+
 
 // =========================================================
 // THEME OPTIONS
 // =========================================================
-add_theme_support( 'automatic-feed-links' );
-add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
-add_theme_support( 'post-thumbnails' );
+add_theme_support('automatic-feed-links');
+add_theme_support('html5', array( 'search-form', 'comment-form', 'comment-list'));
+add_theme_support('post-thumbnails');
+add_image_size('people-img', 350, 350, true);
+add_image_size('featured-page-img', 340, 256, true);
 
 // =========================================================
 // SIDEBARS & MENUS
@@ -42,6 +50,14 @@ register_sidebar(array(
 	'before_title'  => '<h3>',
 	'after_title'   => '</h3>'));
 
+register_sidebar(array(
+	'id'            => 'footer-sidebar',
+	'name'          => 'Footer Sidebar',
+	'before_widget' => '<div class="col %2$s" id="%1$s">',
+	'after_widget'  => '</div>',
+	'before_title'  => '<h5>',
+	'after_title'   => '</h5>'));
+
 register_nav_menus(array(
 	'primary_nav' => __('Primary Navigation', 'theme'),
 	'bottom_nav'  => __('Bottom Navigation', 'theme')));
@@ -50,10 +66,51 @@ register_nav_menus(array(
 // PEOPLE POST TYPE
 // =========================================================
 $GLOBALS['people'] = new PostTypeFactory('People', array('icon_code' => 'f0c0'));
-$GLOBALS['people']->addMetaBox('Contacts', array(
-	'Email'  => 'email',
-	'Phones' => array('table', array('title', 'phone')),
-	'Adress' => 'textarea'));
+$GLOBALS['people']->addMetaBox('Additional info', array(
+	'Position'        => 'text',
+	'Email'           => 'email',
+	'Phones'          => array('table', array('title', 'phone')),
+	'Education'       => array('table', array('items')),
+	'Education title' => 'text',
+	'Adress'          => 'textarea'));
+// =========================================================
+// DEAL POST TYPE
+// =========================================================
+$GLOBALS['deal'] = new PostTYpeFactory('Deal', array('icon_code' => 'f0d6'));
+$GLOBALS['deal']->addMetaBox('Additional info', array(
+	'Featured' => 'checkbox',
+	'Cost'     => 'text'));
+// =========================================================
+// PAGE POST TYPE [ ADD META BOX ]
+// =========================================================
+$GLOBALS['page_meta'] = new PostTypeFactory('page');
+$GLOBALS['page_meta']->meta_box_context = 'side';
+$GLOBALS['page_meta']->addMetaBox('Additional info', array('Featured page' => 'checkbox'));
+// =========================================================
+// THEME OPTIONS PAGE
+// =========================================================
+$GLOBALS['theme_options'] = new PageFactory('Theme options', array(
+	'icon_code' => 'f085'));
+$GLOBALS['theme_options']->addFields('Options', array(
+	array('name' => 'Million in AUM', 'type' => 'text'),
+	array('name' => 'Member aboard', 'type' => 'text'),
+	array('name' => 'Buyouts', 'type' => 'text'),
+	array('name' => 'Company board sets', 'type' => 'text'),
+	array('name' => 'Other news title', 'type' => 'text'),
+	array('name' => 'Slogan', 'type' => 'text')));
+$contact_options_fields = array(
+	array('name' => 'Email', 'type' => 'text'),
+	array('name' => 'Tel (Stockholm)', 'type' => 'text'),
+	array('name' => 'Tel (Reykjavik)', 'type' => 'text'),
+	array('name' => 'Address', 'type' => 'textarea'));
+$GLOBALS['theme_options']->addFields('Contact options', $contact_options_fields);
+// =========================================================
+// LOREM POSTS. JUST FOR DEBUG
+// =========================================================
+// $lorem_posts = new LoremPosts(array(
+// 	'title' => 'Acquisition by Volution',
+// 	'text'  => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc itation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excep teur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'));
+// $lorem_posts->generatePosts(15, 'deal');
 
 function change_menu_classes($css_classes)
 {
@@ -182,4 +239,312 @@ function theme_default_content( $content )
 {
 	$content = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices, magna non porttitor commodo, massa nibh malesuada augue, non viverra odio mi quis nisl. Nullam convallis tincidunt dignissim. Nam vitae purus eget quam adipiscing aliquam. Sed a congue libero. Quisque feugiat tincidunt tortor sed sodales. Etiam mattis, justo in euismod volutpat, ipsum quam aliquet lectus, eu blandit neque libero eu justo. Nunc nibh nulla, accumsan in imperdiet vel, pretium in metus. Aenean in lacus at lacus imperdiet euismod in non nulla. Mauris luctus sodales metus, ac porttitor est lacinia non. Proin diam urna, feugiat at adipiscing in, varius vel mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed tincidunt commodo massa interdum iaculis.</p><!--more--><p>Aliquam metus libero, elementum et malesuada fermentum, sagittis et libero. Nullam quis odio vel ipsum facilisis viverra id sit amet nibh. Vestibulum ullamcorper luctus lacinia. Etiam accumsan, orci eu blandit vestibulum, purus ante malesuada purus, non commodo odio ligula quis turpis. Vestibulum scelerisque feugiat diam, eu mollis elit cursus nec. Quisque commodo ultricies scelerisque. In hac habitasse platea dictumst. Nullam hendrerit rhoncus lacus, id lobortis leo condimentum sed. Nulla facilisi. Quisque ut velit a neque feugiat rutrum at sit amet neque. Sed at libero dictum est aliquam porttitor. Morbi tempor nulla ut tellus malesuada cursus condimentum metus luctus. Quisque dui neque, lobortis id vehicula et, tincidunt eget justo. Morbi vulputate velit eget leo fermentum convallis. Nam mauris risus, consectetur a posuere ultricies, elementum non orci.</p><p>Ut viverra elit vel mauris venenatis gravida ut quis mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend urna sit amet nisi scelerisque pretium. Nulla facilisi. Donec et odio vel sem gravida cursus vestibulum dapibus enim. Pellentesque eget aliquet nisl. In malesuada, quam ac interdum placerat, elit metus consequat lorem, non consequat felis ipsum et ligula. Sed varius interdum volutpat. Vestibulum et libero nisi. Maecenas sit amet risus et sapien lobortis ornare vel quis ipsum. Nam aliquet euismod aliquam. Donec velit purus, convallis ac convallis vel, malesuada vitae erat.</p>";
 	return $content;
+}
+
+/**
+ * Sanitize text fields
+ * @param  array $fields --- which field we need to sanitize
+ * @param  array $arr    --- meta array
+ * @return mixed         --- sanitized array or NULL
+ */
+function sanitizeTextFields($fields, $arr)
+{
+	if(!$arr) return null;	
+	foreach ($fields as &$field) 
+	{	
+		$new_arr[$field] = isset($arr[$field]) ? strip_tags($arr[$field][0]) : '';
+	}
+	return $new_arr;
+}
+
+/**
+ * Sanitize array fields
+ * @param  array $fields --- which field we need to sanitize
+ * @param  array $arr    --- meta array
+ * @return mixed         --- sanitized array or NULL
+ */
+function sanitizeArrayFields($fields, $arr)
+{
+	if(!$arr) return null;	
+	foreach ($fields as &$field) 
+	{		
+		$new_arr[$field] = isset($arr[$field]) && unserialize($arr[$field][0]) ? unserialize($arr[$field][0]) : '';
+	}
+	return $new_arr;
+}
+	
+/**
+ * Display all peoples SHORTCODE
+ * @return string --- html code
+ */
+function displayPeoples()
+{
+	$items   = $GLOBALS['people']->getItems();
+	$options = $GLOBALS['theme_options']->getAll();
+	$slogan  = isset($options['options']['slogan']) ? $options['options']['slogan'] : '';	
+	$slogan  = '<div class="col-sm-6 col-md-4 hidden-xs">
+				<article class="t-item quote">
+					<div class="dtc">
+						<q>'.$slogan.'</q>
+					</div>
+				</article>
+			</div>';	
+	if(!$items) return '';
+	
+	foreach ($items as &$people) 
+	{
+		ob_start();
+		?>
+		<div class="col-sm-6 col-md-4">
+			<article class="t-item">
+				<a href="<?php echo get_permalink($people->ID); ?>">
+					<?php
+					if(has_post_thumbnail($people->ID))
+					{
+						echo get_the_post_thumbnail($people->ID, 'people-img');
+					}
+					?>					
+					<div class="text">
+						<h1><?php echo $people->post_title; ?></h1>
+						<p><?php echo $people->meta['people_position']; ?></p>
+					</div>
+				</a>
+			</article>
+		</div>
+		<?php		
+		$out[] = ob_get_contents();
+    	ob_end_clean();
+	}
+	array_splice($out, 2, 0, array($slogan));
+	return sprintf('<div class="team-list"><div class="row">%1$s%2$s</div></div>', implode(' ', $out), $slogan);
+}
+
+/**
+ * Display other news SHORTCODE
+ * @param  array $args --- short code properties
+ * @return string      --- html code
+ */
+function displayOtherNews($args)
+{
+	$args = !is_array($args) ? array() : $args;
+	$defaults = array(
+		'posts_per_page'   => 3,
+		'offset'           => 0,
+		'category'         => '',
+		'orderby'          => 'post_date',
+		'order'            => 'DESC',
+		'include'          => '',
+		'exclude'          => '',
+		'meta_key'         => '',
+		'meta_value'       => '',
+		'post_type'        => 'post',
+		'post_mime_type'   => '',
+		'post_parent'      => '',
+		'post_status'      => 'publish',
+		'suppress_filters' => true );
+	$args  = array_merge($defaults, $args);
+	$posts = get_posts($args);
+	if(!$posts) return '';
+	foreach ($posts as &$post) 
+	{
+		ob_start();
+		$link = get_permalink($post->ID);
+		$time = date('F j, Y', strtotime($post->post_date));
+		?>
+		<article class="b-item col-sm-4">
+			<span class="a-date"><?php echo $time; ?></span>
+			<div class="content">
+				<h1><a href="<?php echo $link; ?>"><?php echo $post->post_title; ?></a></h1>
+				<p><?php echo apply_filters('get_the_excerpt', $post->post_excerpt); ?></p>
+				<div class="link-holder">
+					<a href="<?php echo $link; ?>" class="link-more">Read more</a>
+				</div>
+			</div>
+		</article>
+		<?php
+		$out[] = ob_get_contents();
+    	ob_end_clean();
+	}
+	return sprintf('<div class="news-items row">%s</div>', implode(' ', $out));
+}
+
+/**
+ * Display Deals SHORTCODE
+ * @param  array $args --- short code properties
+ * @return string      --- html code
+ */
+function displayDeals($args)
+{
+	$args  = !is_array($args) ? array() : $args; 
+	$items = $GLOBALS['deal']->getItems($args);
+	if(!$items) return '';
+
+	foreach ($items as &$item) 
+	{
+		ob_start();
+		$link  = get_permalink($item->ID);
+		$time  = date('F j, Y', strtotime($item->post_date));
+		$angel = $item->meta['deal_featured'] != '' ? '<span class="angle"></span>' : '';
+		$img   = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'thumbnail') : '<img src="http://placehold.it/95x25/ffdf43/666666" alt="no-photo">';
+		?>
+		<article class="a-item adv-t">
+			<span class="a-date"><?php echo $time; ?></span>
+			<div class="col col-logo">
+				<?php echo $img; ?></div>
+			<div class="col col-text">
+				<div class="logo">
+					<?php echo $img; ?></div>
+				<h1><?php echo $item->post_title; ?></h1>
+				<div class="link-holder">
+					<a class="link-more" href="<?php echo $link; ?>">More About Deal</a>
+				</div>
+			</div>
+			<div class="col col-info info">
+				<div class="logo">
+					<img alt="" src="http://wp11.miydim.com/wp-content/themes/beringer/images/logo-mark.png"></div>
+				<h3><?php echo $item->meta['deal_cost']; ?></h3>
+				<p>Advise to Seller</p>
+			</div>
+			<div class="col col-logo clm">
+				<img alt="" src="http://wp11.miydim.com/wp-content/themes/beringer/images/logo-mark.png"></div>
+			<?php echo $angel; ?>
+		</article>
+		<?php
+		$out[] = ob_get_contents();
+    	ob_end_clean();
+	}
+	return sprintf('<div class="transactions-list cf">%s</div>', implode(' ', $out));
+}
+
+function getFeedBlockItems()
+{
+	$args = array(
+		'posts_per_page'   => 3,
+		'offset'           => 0,
+		'category'         => 4,
+		'orderby'          => 'post_date',
+		'order'            => 'DESC',
+		'include'          => '',
+		'exclude'          => '',
+		'meta_key'         => '',
+		'meta_value'       => '',
+		'post_type'        => 'post',
+		'post_mime_type'   => '',
+		'post_parent'      => '',
+		'post_status'      => 'publish',
+		'suppress_filters' => true );
+	$posts = get_posts($args);
+
+	$args = array(
+		'posts_per_page'   => 2,		
+		'meta_key'         => 'deal_featured',
+		'meta_value'       => 'deal_featured');
+	$deals = $GLOBALS['deal']->getItems($args);	
+	array_splice($posts, 1, 0, array($deals[0]));
+	array_splice($posts, 4, 0, array($deals[1]));
+	return $posts;
+}
+
+/**
+ * Fill array 
+ * @param  array $fields --- field list
+ * @param  array $arr    --- array with values
+ * @return array         --- filled array
+ */
+function fillArray($fields, $arr)
+{
+	if(!$fields) return null;
+	foreach ($fields as &$field) 
+	{
+		$out[$field] = isset($arr[$field]) ? $arr[$field] : '';
+	}
+	return $out;
+}
+
+/**
+ * Get featured page
+ * @return array --- featured page
+ */
+function getFeaturedPage()
+{
+	$args = array(
+		'posts_per_page'   => 1,
+		'offset'           => 0,
+		'category'         => '',
+		'orderby'          => 'post_date',
+		'order'            => 'DESC',
+		'include'          => '',
+		'exclude'          => '',
+		'meta_key'         => 'page_featured_page',
+		'meta_value'       => 'page_featured_page',
+		'post_type'        => 'page',
+		'post_mime_type'   => '',
+		'post_parent'      => '',
+		'post_status'      => 'publish',
+		'suppress_filters' => true );
+	$posts = get_posts($args);
+	if($posts) 
+	{
+		return array(
+			'link'    => get_permalink($posts[0]->ID),
+			'img'     => has_post_thumbnail($posts[0]->ID) ? get_the_post_thumbnail($posts[0]->ID, 'featured-page-img') : '<img src="http://placehold.it/340x256/ffdf43/666666" alt="no-photo">',
+			'title'   => $posts[0]->post_title,
+			'content' => wp_trim_words($posts[0]->post_content, 135));			
+	}
+	return null;
+	
+}
+
+/**
+ * Display breadcrumbx
+ */
+function the_breadcrumb() 
+{
+    global $post;
+    echo '<ul class="breadcrumbs">';
+    if (!is_home()) 
+    {
+        echo '<li><a href="';
+        echo get_option('home');
+        echo '">';
+        echo 'Home';
+        echo '</a></li><li class="separator"></li>';
+        if (is_category() || is_single()) 
+        {
+            echo '<li>';
+            the_category(' </li><li class="separator"></li><li> ');
+            if (is_single()) 
+            {
+                echo '</li><li class="separator"></li><li>';
+                the_title();
+                echo '</li>';
+            }
+        } 
+        else if (is_page()) 
+        {
+            if($post->post_parent)
+            {
+                $anc = get_post_ancestors( $post->ID );
+                $title = get_the_title();
+                foreach ( $anc as $ancestor ) 
+                {
+                    $output = '<li><a href="'.get_permalink($ancestor).'" title="'.get_the_title($ancestor).'">'.get_the_title($ancestor).'</a></li> <li class="separator"></li>';
+                }
+                echo $output;
+                echo '<strong title="'.$title.'"> '.$title.'</strong>';
+            } 
+            else 
+            {
+                echo '<li><strong> '.get_the_title().'</strong></li>';
+            }
+        }
+    }
+    elseif (is_tag()) {single_tag_title();}
+    elseif (is_day()) {echo"<li>Archive for "; the_time('F jS, Y'); echo'</li>';}
+    elseif (is_month()) {echo"<li>Archive for "; the_time('F, Y'); echo'</li>';}
+    elseif (is_year()) {echo"<li>Archive for "; the_time('Y'); echo'</li>';}
+    elseif (is_author()) {echo"<li>Author Archive"; echo'</li>';}
+    elseif (isset($_GET['paged']) && !empty($_GET['paged'])) {echo "<li>Blog Archives"; echo'</li>';}
+    elseif (is_search()) {echo"<li>Search Results"; echo'</li>';}
+    echo '</ul>';
 }
