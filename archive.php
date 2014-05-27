@@ -8,18 +8,14 @@
 <?php get_header(); ?>
 <div class="breadcrumbs-area hidden-xs">
 	<div class="center-wrap cf">
-		<ul class="breadcrumbs">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li>Page Name</li>
-		</ul>
+		<?php the_breadcrumb(); ?>
 	</div>
 </div>
 <header class="page-title visible-xs">
 	<h1 class="archive-title">
 	<?php global $post;
 		if (is_category()):
-			printf( __( 'Category Archives: %s', 'theme' ), single_cat_title( '', false ) );
+			printf( __( '%s', 'theme' ), single_cat_title( '', false ) );
 		elseif( is_tag() ):
 			printf( __( 'Tag Archives: %s', 'theme' ), single_tag_title( '', false ) );
 		elseif ( is_day() ) :
@@ -40,7 +36,7 @@
 	<h1 class="p-title hidden-xs">
 	<?php global $post;
 		if (is_category()):
-			printf( __( 'Category Archives: %s', 'theme' ), single_cat_title( '', false ) );
+			printf( __( '%s', 'theme' ), single_cat_title( '', false ) );
 		elseif( is_tag() ):
 			printf( __( 'Tag Archives: %s', 'theme' ), single_tag_title( '', false ) );
 		elseif ( is_day() ) :
