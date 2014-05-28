@@ -9,17 +9,11 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo (wp_title( ' ', false, 'right' ) == '') ? get_bloginfo('name') : (wp_title( ' ', false, 'right' ) == ''); ?></title>
-	<link rel="profile" href="http://gmpg.org/xfn/11" />
-	<link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
-	<link rel="stylesheet" media="(min-width: 480px)" href="<?php echo TDU; ?>/css/xs.css" />
-	<link rel="stylesheet" media="(min-width: 768px)" href="<?php echo TDU; ?>/css/sm.css" />
-	<link rel="stylesheet" media="(min-width: 980px)" href="<?php echo TDU; ?>/css/md.css" />
-	<link rel="stylesheet" media="(min-width: 1170px)" href="<?php echo TDU; ?>/css/lg.css" />
+	<title><?php echo (wp_title( ' ', false, 'right' ) == '') ? get_bloginfo('name') : wp_title( ' ', false, 'right' ); ?></title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />	
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	<?php if ( is_singular() && get_option( 'thread_comments' ) ) wp_enqueue_script( 'comment-reply' ); 
-		wp_head(); ?>
-	<script type="text/javascript" src="<?php echo TDU; ?>/js/jquery.main.js" ></script>
+		wp_head(); ?>	
 	<!--[if lt IE 9]>
 		<script type="text/javascript" src="<?php echo TDU; ?>/js/html5.js"></script>
 	<![endif]-->
