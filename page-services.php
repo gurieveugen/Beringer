@@ -120,37 +120,7 @@
 			</div>
 		</div>
 	</article>
-	<div id="sidebar">
-		<aside class="widget">
-			<ul class="aside-nav">	
-				<li><a href="#">Overview</a></li>
-				<li><a href="#">Project co-ordination</a></li>
-				<li><a href="#">Prep of decision material</a></li>
-				<li><a href="#">Valuation</a></li>
-				<li><a href="#">Tactics</a></li>
-				<li><a href="#">Documentation</a></li>
-				<li><a href="#">Buyers &amp; Sellers</a></li>
-				<li><a href="#">Structure</a></li>
-				<li><a href="#">Negotiation</a></li>
-			</ul>
-		</aside>
-		<aside class="widget hidden-xs">
-			<aside class="a-item adv">
-				<span class="a-date">April 14, 2014</span>
-				<div class="content">
-					<h1>Direct share issue to Bure Equity AB</h1>
-					<div class="link-holder">
-						<a href="#" class="link-more">More About Deal</a>
-					</div>
-				</div>
-				<div class="info">
-					<h3>SEK 36 million</h3>
-					<p>Advise to Seller</p>
-				</div>
-				<span class="angle"></span>
-			</aside>
-		</aside>
-	</div>
+	<?php get_sidebar('services'); ?>	
 </div>
 <?php endif; ?>
 <?php get_footer(); ?>

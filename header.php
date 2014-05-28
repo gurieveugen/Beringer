@@ -36,10 +36,19 @@
 	<div id="wrapper">
 		<div class="top-bar hidden-xs">
 			<div class="center-wrap cf">
-				<ul class="lang-list">
-					<li class="active"><a href="#">EN</a></li>
-					<li><a href="#">SE</a></li>
-				</ul>
+				<?php
+				$languages = icl_get_languages('');
+				
+				if(count($languages) > 1)
+				{
+					echo '<ul class="lang-list">';
+					foreach ($languages as &$l) 
+					{
+						printf('<li class="%1$s"><a href="%2$s">%3$s</a></li>', active($l['active']), $l['url'], $l['language_code']);
+					}
+					echo '</ul>';
+				}
+				?>
 			</div>
 		</div>
 		<header id="header">

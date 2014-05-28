@@ -21,11 +21,12 @@
 	<div class="filter-row cf">
 		<div class="filter">
 			<label>Sort By</label>
-			<select>
-				<option>Type of deal</option>
-				<option>Option 1</option>
-				<option>Option 2</option>
-				<option>Option 3</option>
+			<select name="sort-by" id="sort-by">
+				<option value="-1">Type of deal</option>
+				<option value="asc">ASC</option>
+				<option value="desc">DESC</option>
+				<option value="date">Date</option>
+				<option value="title">Title</option>
 			</select>
 		</div>
 	</div>

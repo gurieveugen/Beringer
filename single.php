@@ -7,22 +7,29 @@
 ?>
 <?php get_header(); ?>
 <?php
+
 $options = $GLOBALS['theme_options']->getAll();
 $fields  = fillArray(array('other_news_title'), $options['options']);
-extract($fields);
+extract($fields);		
 ?>
 
-<?php if ( have_posts() ) : the_post(); ?>
+<?php 
+if ( have_posts() ) : 
+the_post(); 
+$cat = get_the_category();
+$title = $cat ? $cat[0]->name : '';
+?>
+
 <div class="breadcrumbs-area hidden-xs">
 	<div class="center-wrap cf">		
 		<?php the_breadcrumb(); ?>
 	</div>
 </div>
 <header class="page-title visible-xs">
-	<h1>News</h1>
+	<h1><?php echo $title; ?></h1>
 </header>
 <div class="main-single center-wrap cf">
-	<h1 class="p-title hidden-xs">News</h1>
+	<h1 class="p-title hidden-xs"><?php echo $title; ?></h1>
 	<article class="single-article">
 		<span class="a-date"><?php the_date() ?></span>
 		<h1><?php the_title(); ?></h1>

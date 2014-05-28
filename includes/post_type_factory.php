@@ -388,6 +388,22 @@ class PostTypeFactory{
     }
 
     /**
+     * Get this post type item
+     * @param  integer $id --- item ID
+     * @return mixed       --- object | null 
+     */
+    public function getItem($id)
+    {
+        $p = get_post($id);
+        if($p)
+        {
+            $p->meta = $this->getMeta($p->ID);
+            return $p;
+        }
+        return null;
+    }
+
+    /**
      * Format name to web control
      * @param  string $name
      * @return string      

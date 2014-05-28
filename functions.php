@@ -12,10 +12,14 @@ define('TDU', get_bloginfo('template_url'));
 require_once 'includes/post_type_factory.php';
 require_once 'includes/page_factory.php';
 require_once 'includes/lorem_posts.php';
+require_once 'includes/widget_custom_menu.php';
+require_once 'includes/widget_deal.php';
 
 // =========================================================
 // HOOKS
 // =========================================================
+add_action('widgets_init', 'widgetsInit');
+add_action('after_setup_theme', 'themeNameSetup');
 add_filter('the_content', 'filter_template_url');
 add_filter('get_the_content', 'filter_template_url');
 add_filter('widget_text', 'filter_template_url');
@@ -27,6 +31,7 @@ add_filter('widget_text', 'template_url');
 add_filter('default_content', 'theme_default_content');
 add_shortcode('peoples', 'displayPeoples');
 add_shortcode('deals', 'displayDeals');
+add_shortcode('services', 'displayServices');
 add_shortcode('other_news', 'displayOtherNews');
 
 
@@ -38,6 +43,8 @@ add_theme_support('html5', array( 'search-form', 'comment-form', 'comment-list')
 add_theme_support('post-thumbnails');
 add_image_size('people-img', 350, 350, true);
 add_image_size('featured-page-img', 340, 256, true);
+add_image_size('services-img', 268, 178, true);
+
 
 // =========================================================
 // SIDEBARS & MENUS
@@ -45,6 +52,14 @@ add_image_size('featured-page-img', 340, 256, true);
 register_sidebar(array(
 	'id'            => 'left-sidebar',
 	'name'          => 'Left Sidebar',
+	'before_widget' => '<div class="widget %2$s" id="%1$s">',
+	'after_widget'  => '</div>',
+	'before_title'  => '<h3>',
+	'after_title'   => '</h3>'));
+
+register_sidebar(array(
+	'id'            => 'services-left-sidebar',
+	'name'          => 'Services Left Sidebar',
 	'before_widget' => '<div class="widget %2$s" id="%1$s">',
 	'after_widget'  => '</div>',
 	'before_title'  => '<h3>',
@@ -81,6 +96,10 @@ $GLOBALS['deal']->addMetaBox('Additional info', array(
 	'Featured' => 'checkbox',
 	'Cost'     => 'text'));
 // =========================================================
+// SERVICES POST TYPE
+// =========================================================
+$GLOBALS['pt_service'] = new PostTypeFactory('service', array('icon_code' => 'f085'));
+// =========================================================
 // PAGE POST TYPE [ ADD META BOX ]
 // =========================================================
 $GLOBALS['page_meta'] = new PostTypeFactory('page');
@@ -111,6 +130,19 @@ $GLOBALS['theme_options']->addFields('Contact options', $contact_options_fields)
 // 	'title' => 'Acquisition by Volution',
 // 	'text'  => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc itation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excep teur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'));
 // $lorem_posts->generatePosts(15, 'deal');
+
+function themeNameSetup()
+{ 
+	$domain = 'beringer';
+
+	load_theme_textdomain( $domain, TDU.'/languages' );
+}
+
+function widgetsInit()
+{
+	register_widget("Custom_WP_Nav_Menu_Widget");
+	register_widget("DealWidget");
+}
 
 function change_menu_classes($css_classes)
 {
@@ -223,9 +255,10 @@ function theme_entry_meta()
 
 function scripts_method() 
 {
-	wp_deregister_script( 'jquery' );
-	wp_register_script( 'jquery', TDU.'/js/jquery-1.11.0.min.js');
-	wp_enqueue_script( 'jquery' );
+	wp_deregister_script('jquery');
+	wp_register_script('jquery', TDU.'/js/jquery-1.11.0.min.js');
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('isotope', TDU.'/js/isotope.pkgd.min.js', array('jquery'));
 }
 
 // register tag [template-url]
@@ -237,7 +270,7 @@ function template_url($text)
 
 function theme_default_content( $content ) 
 {
-	$content = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices, magna non porttitor commodo, massa nibh malesuada augue, non viverra odio mi quis nisl. Nullam convallis tincidunt dignissim. Nam vitae purus eget quam adipiscing aliquam. Sed a congue libero. Quisque feugiat tincidunt tortor sed sodales. Etiam mattis, justo in euismod volutpat, ipsum quam aliquet lectus, eu blandit neque libero eu justo. Nunc nibh nulla, accumsan in imperdiet vel, pretium in metus. Aenean in lacus at lacus imperdiet euismod in non nulla. Mauris luctus sodales metus, ac porttitor est lacinia non. Proin diam urna, feugiat at adipiscing in, varius vel mi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed tincidunt commodo massa interdum iaculis.</p><!--more--><p>Aliquam metus libero, elementum et malesuada fermentum, sagittis et libero. Nullam quis odio vel ipsum facilisis viverra id sit amet nibh. Vestibulum ullamcorper luctus lacinia. Etiam accumsan, orci eu blandit vestibulum, purus ante malesuada purus, non commodo odio ligula quis turpis. Vestibulum scelerisque feugiat diam, eu mollis elit cursus nec. Quisque commodo ultricies scelerisque. In hac habitasse platea dictumst. Nullam hendrerit rhoncus lacus, id lobortis leo condimentum sed. Nulla facilisi. Quisque ut velit a neque feugiat rutrum at sit amet neque. Sed at libero dictum est aliquam porttitor. Morbi tempor nulla ut tellus malesuada cursus condimentum metus luctus. Quisque dui neque, lobortis id vehicula et, tincidunt eget justo. Morbi vulputate velit eget leo fermentum convallis. Nam mauris risus, consectetur a posuere ultricies, elementum non orci.</p><p>Ut viverra elit vel mauris venenatis gravida ut quis mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend urna sit amet nisi scelerisque pretium. Nulla facilisi. Donec et odio vel sem gravida cursus vestibulum dapibus enim. Pellentesque eget aliquet nisl. In malesuada, quam ac interdum placerat, elit metus consequat lorem, non consequat felis ipsum et ligula. Sed varius interdum volutpat. Vestibulum et libero nisi. Maecenas sit amet risus et sapien lobortis ornare vel quis ipsum. Nam aliquet euismod aliquam. Donec velit purus, convallis ac convallis vel, malesuada vitae erat.</p>";
+	$content = "<p>Lorem ipsum dolor sit amet, consecteturm ad minim veniam, quis nostrud exercehenderit in voluptat.olor sit amet, co.</p><!--more--><p>Aliquam metus libero, elementum et malesuada fermentum, sagittis et libero. Nullam quis odio vel ipsum facilisis viverra id sit amet nibh. Vestibulum ullamcorper luctus lacinia. Etiam accumsan, orci eu blandit vestibulum, purus ante malesuada purus, non commodo odio ligula quis turpis. Vestibulum scelerisque feugiat diam, eu mollis elit cursus nec. Quisque commodo ultricies scelerisque. In hac habitasse platea dictumst. Nullam hendrerit rhoncus lacus, id lobortis leo condimentum sed. Nulla facilisi. Quisque ut velit a neque feugiat rutrum at sit amet neque. Sed at libero dictum est aliquam porttitor. Morbi tempor nulla ut tellus malesuada cursus condimentum metus luctus. Quisque dui neque, lobortis id vehicula et, tincidunt eget justo. Morbi vulputate velit eget leo fermentum convallis. Nam mauris risus, consectetur a posuere ultricies, elementum non orci.</p><p>Ut viverra elit vel mauris venenatis gravida ut quis mi. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eleifend urna sit amet nisi scelerisque pretium. Nulla facilisi. Donec et odio vel sem gravida cursus vestibulum dapibus enim. Pellentesque eget aliquet nisl. In malesuada, quam ac interdum placerat, elit metus consequat lorem, non consequat felis ipsum et ligula. Sed varius interdum volutpat. Vestibulum et libero nisi. Maecenas sit amet risus et sapien lobortis ornare vel quis ipsum. Nam aliquet euismod aliquam. Donec velit purus, convallis ac convallis vel, malesuada vitae erat.</p>";
 	return $content;
 }
 
@@ -378,7 +411,8 @@ function displayDeals($args)
 	$args  = !is_array($args) ? array() : $args; 
 	$items = $GLOBALS['deal']->getItems($args);
 	if(!$items) return '';
-
+	$i = 100000000;
+	$j = 0;
 	foreach ($items as &$item) 
 	{
 		ob_start();
@@ -387,7 +421,7 @@ function displayDeals($args)
 		$angel = $item->meta['deal_featured'] != '' ? '<span class="angle"></span>' : '';
 		$img   = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'thumbnail') : '<img src="http://placehold.it/95x25/ffdf43/666666" alt="no-photo">';
 		?>
-		<article class="a-item adv-t">
+		<article class="a-item adv-t" data-asc="<?php echo $i--; ?>" data-desc="<?php echo $j++; ?>" data-date="<?php echo $item->post_date; ?>" data-title="<?php echo $item->post_title; ?>">			
 			<span class="a-date"><?php echo $time; ?></span>
 			<div class="col col-logo">
 				<?php echo $img; ?></div>
@@ -416,6 +450,41 @@ function displayDeals($args)
 	return sprintf('<div class="transactions-list cf">%s</div>', implode(' ', $out));
 }
 
+/**
+ * Display Services SHORTCODE
+ * @param  array $args --- short code properties
+ * @return string      --- html code
+ */
+function displayServices($args)
+{
+	$args  = !is_array($args) ? array() : $args; 
+	$items = $GLOBALS['pt_service']->getItems($args);
+	if(!$items) return '';
+
+	foreach ($items as &$item) 
+	{
+		ob_start();
+		$link  = get_permalink($item->ID);
+		$img   = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'services-img') : '<img src="http://placehold.it/268x178/ffdf43/666666" alt="no-photo">';
+		?>
+		<div class="s-item col-sm-6 col-md-4 cf">
+			<div class="image hidden-xs">
+				<a href="<?php echo $link; ?>">
+					<?php echo $img; ?>
+				</a>
+			</div>
+			<div class="text">
+				<h3><a href="<?php echo $link; ?>"><?php echo $item->post_title; ?></a></h3>
+				<?php echo getShortText( $item->post_content); ?>
+			</div>
+		</div>
+		<?php
+		$out[] = ob_get_contents();
+    	ob_end_clean();
+	}
+	return sprintf('<div class="services-list"><div class="row">%s</div></div>', implode(' ', $out));
+}
+
 function getFeedBlockItems()
 {
 	$args = array(
@@ -430,11 +499,12 @@ function getFeedBlockItems()
 		'meta_value'       => '',
 		'post_type'        => 'post',
 		'post_mime_type'   => '',
-		'post_parent'      => '',
+		'post_parent'      => '',		
 		'post_status'      => 'publish',
 		'suppress_filters' => true );
-	$posts = get_posts($args);
 
+	$posts = get_posts($args);
+	
 	$args = array(
 		'posts_per_page'   => 2,		
 		'meta_key'         => 'deal_featured',
@@ -541,4 +611,15 @@ function the_breadcrumb()
 		}	
 		echo '</ul>';
 	}
+}
+
+function getShortText($txt)
+{
+	$tmp = explode('<!--more-->', $txt);
+	return $tmp[0];
+}
+
+function active($yes = false)
+{
+	return $yes ? 'active' : '';
 }
