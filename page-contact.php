@@ -6,9 +6,25 @@
 ?>
 <?php get_header(); ?>
 <?php 
-$options = $GLOBALS['theme_options']->getAll();
-$fields  = fillArray(array('address', 'email', 'tel_stockholm', 'tel_reykjavik'), $options['contact_options']);
+$options        = $GLOBALS['theme_options']->getAll();
+$fields         = fillArray(array('address', 'email', 'tel_stockholm', 'tel_reykjavik', 'contact_background_image'), $options['contact_options']);
+$fileds_options = fillArray(array('contact_background_image'), $options['options']);
+$imgs    = array(
+	'big'   => '<img src="http://placehold.it/1920x634/ffdf43/666666" alt="BIG" class="image hidden-xs">',
+	'small' => '<img src="http://placehold.it/480x301/ffdf43/666666" alt="SMALL" class="image visible-xs">');
 extract($fields);
+extract($fileds_options);
+
+if($contact_background_image['id'] > 0)
+{
+	$img_big   = wp_get_attachment_image_src($contact_background_image['id'], 'big-bg-img');
+	$img_small = wp_get_attachment_image_src($contact_background_image['id'], 'small-bg-img');
+	if($img_big && $img_small)
+	{
+		$imgs['big']   = sprintf('<div class="image hidden-xs" style="background-image: url(%s);"></div>', $img_big[0]);
+		$imgs['small'] = sprintf('<div class="image visible-xs" style="background-image: url(%s);"></div>', $img_small[0]);
+	}
+}
 ?>
 <?php if ( have_posts() ) : the_post(); ?>
 <header class="page-title visible-xs">
@@ -16,9 +32,11 @@ extract($fields);
 </header>
 <div class="main-image">
 	<!-- 480xauto image for small screens -->
-	<div class="image visible-xs" style="background-image: url(/wp-content/themes/beringer/images/img-3-xs.jpg);"></div>
+	<!-- <div class="image visible-xs" style="background-image: url(/wp-content/themes/beringer/images/img-3-xs.jpg);"></div> -->
+	<?php echo $imgs['small']; ?>
 	<!-- full width image -->
-	<div class="image hidden-xs" style="background-image: url(/wp-content/themes/beringer/images/img-3.jpg);"></div>
+	<!-- <div class="image hidden-xs" style="background-image: url(/wp-content/themes/beringer/images/img-3.jpg);"></div> -->
+	<?php echo $imgs['big']; ?>
 </div>
 <div class="main-contact center-wrap">
 	<?php the_content(); ?>

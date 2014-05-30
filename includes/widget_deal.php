@@ -71,7 +71,7 @@ class DealWidget extends WP_Widget{
 			<input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id('deal'); ?>"><?php _e('Select Menu:'); ?></label>
+			<label for="<?php echo $this->get_field_id('deal'); ?>"><?php _e('Select Deal:'); ?></label>
 			<select id="<?php echo $this->get_field_id('deal'); ?>" name="<?php echo $this->get_field_name('deal'); ?>">
 				<option value="-1"><?php _e( '&mdash; Select &mdash;' ) ?></option>
 				<?php

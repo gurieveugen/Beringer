@@ -8,8 +8,22 @@
 <?php get_header(); ?>
 <?php 
 $options = $GLOBALS['theme_options']->getAll();
-$fields  = fillArray(array('million_in_aum', 'member_aboard', 'buyouts', 'company_board_sets'), $options['options']);
+$fields  = fillArray(array('million_in_aum', 'member_aboard', 'buyouts', 'company_board_sets', 'home_background_image'), $options['options']);
+$imgs    = array(
+	'big'   => '<img src="http://placehold.it/1920x634/ffdf43/666666" alt="Big">',
+	'small' => '<img src="http://placehold.it/480x301/ffdf43/666666" alt="Small">');
 extract($fields);
+
+if($home_background_image['id'] > 0)
+{
+	$img_big   = wp_get_attachment_image_src($home_background_image['id'], 'big-bg-img');
+	$img_small = wp_get_attachment_image_src($home_background_image['id'], 'small-bg-img');
+	if($img_big && $img_small)
+	{
+		$imgs['big']   = sprintf('<div class="image hidden-xs" style="background-image: url(%s);"></div>', $img_big[0]);
+		$imgs['small'] = sprintf('<div class="image visible-xs" style="background-image: url(%s);"></div>', $img_small[0]);
+	}
+}
 ?>
 
 <section class="visual">
@@ -19,9 +33,9 @@ extract($fields);
 		<a href="<?php echo get_bloginfo('url'); ?>/our-story" class="btn-large w-234">View Our Story</a>
 	</div>
 	<!-- 480xauto image for small screens -->
-	<div class="image visible-xs" style="background-image: url(/wp-content/themes/beringer/images/img-xs.jpg);"></div>
+	<?php echo $imgs['small']; ?>
 	<!-- full width image -->
-	<div class="image hidden-xs" style="background-image: url(/wp-content/themes/beringer/images/img.jpg);"></div>
+	<?php echo $imgs['big']; ?>
 </section>
 <section class="updates-block wrap cf">
 	<a href="<?php echo get_bloginfo('url'); ?>/transactions/" class="btn-updates">

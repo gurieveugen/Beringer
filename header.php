@@ -32,15 +32,22 @@
 			<div class="center-wrap cf">
 				<?php
 				$languages = icl_get_languages('');
+				$options   = $GLOBALS['theme_options']->getAll();
+				$fields    = fillArray(array('language_switcher'), $options['options']);
+				extract($fields);
+
 				
-				if(count($languages) > 1)
+				if($language_switcher != '')
 				{
-					echo '<ul class="lang-list">';
-					foreach ($languages as &$l) 
+					if(count($languages) > 1)
 					{
-						printf('<li class="%1$s"><a href="%2$s">%3$s</a></li>', active($l['active']), $l['url'], $l['language_code']);
-					}
-					echo '</ul>';
+						echo '<ul class="lang-list">';
+						foreach ($languages as &$l) 
+						{
+							printf('<li class="%1$s"><a href="%2$s">%3$s</a></li>', active($l['active']), $l['url'], $l['language_code']);
+						}
+						echo '</ul>';
+					}	
 				}
 				?>
 			</div>

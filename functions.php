@@ -45,6 +45,8 @@ add_theme_support('post-thumbnails');
 add_image_size('people-img', 350, 350, true);
 add_image_size('featured-page-img', 340, 256, true);
 add_image_size('services-img', 268, 178, true);
+add_image_size('big-bg-img', 1920, 634, true);
+add_image_size('small-bg-img', 480, 301, true);
 
 
 // =========================================================
@@ -117,7 +119,11 @@ $GLOBALS['theme_options']->addFields('Options', array(
 	array('name' => 'Buyouts', 'type' => 'text'),
 	array('name' => 'Company board sets', 'type' => 'text'),
 	array('name' => 'Other news title', 'type' => 'text'),
-	array('name' => 'Slogan', 'type' => 'text')));
+	array('name' => 'Slogan', 'type' => 'text'),
+	array('name' => 'Language switcher', 'type' => 'checkbox'),
+	array('name' => 'Home background image', 'type' => 'image'),
+	array('name' => 'Contact background image', 'type' => 'image')
+	));
 $contact_options_fields = array(
 	array('name' => 'Email', 'type' => 'text'),
 	array('name' => 'Tel (Stockholm)', 'type' => 'text'),
