@@ -24,12 +24,14 @@ if($home_background_image['id'] > 0)
 		$imgs['small'] = sprintf('<div class="image visible-xs" style="background-image: url(%s);"></div>', $img_small[0]);
 	}
 }
+the_post();
 ?>
 
 <section class="visual">
 	<div class="center-wrap">
-		<h2>Idea Driven Nordic Corporate Finance</h2>
-		<p>Our goal is to become the pre-eminent private finance firm <br class="hidden-xs">focused on the Nordic lower middle market</p>
+		<?php the_content(); ?>
+		<!-- <h2>Idea Driven Nordic Corporate Finance</h2>
+		<p>Our goal is to become the pre-eminent private finance firm <br class="hidden-xs">focused on the Nordic lower middle market</p> -->
 		<a href="<?php echo get_bloginfo('url'); ?>/our-story" class="btn-large w-234">View Our Story</a>
 	</div>
 	<!-- 480xauto image for small screens -->

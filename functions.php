@@ -83,7 +83,7 @@ register_nav_menus(array(
 // =========================================================
 // PEOPLE POST TYPE
 // =========================================================
-$GLOBALS['people'] = new PostTypeFactory('People', array('icon_code' => 'f0c0'));
+$GLOBALS['people'] = new PostTypeFactory('People', array('icon_code' => 'f0c0', 'label' => 'People'));
 $GLOBALS['people']->addMetaBox('Additional info', array(
 	'Position'        => 'text',
 	'Email'           => 'email',
@@ -119,15 +119,16 @@ $GLOBALS['theme_options']->addFields('Options', array(
 	array('name' => 'Buyouts', 'type' => 'text'),
 	array('name' => 'Company board sets', 'type' => 'text'),
 	array('name' => 'Other news title', 'type' => 'text'),
-	array('name' => 'Slogan', 'type' => 'text'),
+	array('name' => 'Our team quote 1', 'type' => 'text'),
+	array('name' => 'Our team quote 2', 'type' => 'text'),
 	array('name' => 'Language switcher', 'type' => 'checkbox'),
-	array('name' => 'Home background image', 'type' => 'image'),
-	array('name' => 'Contact background image', 'type' => 'image')
+	array('name' => 'Home background image', 'type' => 'image')	
 	));
 $contact_options_fields = array(
 	array('name' => 'Email', 'type' => 'text'),
 	array('name' => 'Tel (Stockholm)', 'type' => 'text'),
 	array('name' => 'Tel (Reykjavik)', 'type' => 'text'),
+	array('name' => 'Contact background image', 'type' => 'image'),
 	array('name' => 'Address', 'type' => 'textarea'));
 $GLOBALS['theme_options']->addFields('Contact options', $contact_options_fields);
 // =========================================================
@@ -333,11 +334,19 @@ function displayPeoples()
 {
 	$items   = $GLOBALS['people']->getItems();
 	$options = $GLOBALS['theme_options']->getAll();
-	$slogan  = isset($options['options']['slogan']) ? $options['options']['slogan'] : '';	
-	$slogan  = '<div class="col-sm-6 col-md-4 hidden-xs">
+	$our_team_quote_1  = isset($options['options']['our_team_quote_1']) ? $options['options']['our_team_quote_1'] : '';	
+	$our_team_quote_2  = isset($options['options']['our_team_quote_2']) ? $options['options']['our_team_quote_2'] : '';	
+	$our_team_quote_1  = '<div class="col-sm-6 col-md-4 hidden-xs">
 				<article class="t-item quote">
 					<div class="dtc">
-						<q>'.$slogan.'</q>
+						<q>'.$our_team_quote_1.'</q>
+					</div>
+				</article>
+			</div>';	
+	$our_team_quote_2  = '<div class="col-sm-6 col-md-4 hidden-xs">
+				<article class="t-item quote">
+					<div class="dtc">
+						<q>'.$our_team_quote_2.'</q>
 					</div>
 				</article>
 			</div>';	
@@ -367,8 +376,8 @@ function displayPeoples()
 		$out[] = ob_get_contents();
     	ob_end_clean();
 	}
-	array_splice($out, 2, 0, array($slogan));
-	return sprintf('<div class="team-list"><div class="row">%1$s%2$s</div></div>', implode(' ', $out), $slogan);
+	array_splice($out, 2, 0, array($our_team_quote_1));
+	return sprintf('<div class="team-list"><div class="row">%1$s%2$s</div></div>', implode(' ', $out), $our_team_quote_2);
 }
 
 /**

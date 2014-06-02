@@ -8,7 +8,7 @@
 <?php 
 $options        = $GLOBALS['theme_options']->getAll();
 $fields         = fillArray(array('address', 'email', 'tel_stockholm', 'tel_reykjavik', 'contact_background_image'), $options['contact_options']);
-$fileds_options = fillArray(array('contact_background_image'), $options['options']);
+$fileds_options = fillArray(array('contact_background_image'), $options['contact_options']);
 $imgs    = array(
 	'big'   => '<img src="http://placehold.it/1920x634/ffdf43/666666" alt="BIG" class="image hidden-xs">',
 	'small' => '<img src="http://placehold.it/480x301/ffdf43/666666" alt="SMALL" class="image visible-xs">');
