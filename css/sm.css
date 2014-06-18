@@ -199,6 +199,9 @@ h2{
 	display: block;
 	padding: 20px 10px 20px 0;
 }
+.a-item.adv .info{
+	display: block;
+}
 /* feed-blocks end */
 /* section-about */
 .section-about{

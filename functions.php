@@ -47,6 +47,7 @@ add_image_size('featured-page-img', 340, 256, true);
 add_image_size('services-img', 268, 178, true);
 add_image_size('big-bg-img', 1920, 634, true);
 add_image_size('small-bg-img', 480, 301, true);
+add_image_size('deal-logo-img', 95, 30, false);
 
 
 // =========================================================
@@ -97,7 +98,8 @@ $GLOBALS['people']->addMetaBox('Additional info', array(
 $GLOBALS['deal'] = new PostTYpeFactory('Deal', array('icon_code' => 'f0d6'));
 $GLOBALS['deal']->addMetaBox('Additional info', array(
 	'Featured' => 'checkbox',
-	'Cost'     => 'text'));
+	'Cost'     => 'text', 
+	'Sub title' => 'text'));
 // =========================================================
 // SERVICES POST TYPE
 // =========================================================
@@ -114,10 +116,14 @@ $GLOBALS['page_meta']->addMetaBox('Additional info', array('Featured page' => 'c
 $GLOBALS['theme_options'] = new PageFactory('Theme options', array(
 	'icon_code' => 'f085'));
 $GLOBALS['theme_options']->addFields('Options', array(
-	array('name' => 'Million in AUM', 'type' => 'text'),
-	array('name' => 'Member aboard', 'type' => 'text'),
-	array('name' => 'Buyouts', 'type' => 'text'),
-	array('name' => 'Company board sets', 'type' => 'text'),
+	array('name' => 'First field text', 'type' => 'text'),
+	array('name' => 'First field value', 'type' => 'text'),
+	array('name' => 'Second field text', 'type' => 'text'),
+	array('name' => 'Second field value', 'type' => 'text'),
+	array('name' => 'Third field text', 'type' => 'text'),
+	array('name' => 'Third field value', 'type' => 'text'),
+	array('name' => 'Fourth field text', 'type' => 'text'),
+	array('name' => 'Fourth field value', 'type' => 'text'),	
 	array('name' => 'Other news title', 'type' => 'text'),
 	array('name' => 'Our team quote 1', 'type' => 'text'),
 	array('name' => 'Our team quote 2', 'type' => 'text'),
@@ -444,10 +450,11 @@ function displayDeals($args)
 	foreach ($items as &$item) 
 	{
 		ob_start();
-		$link  = get_permalink($item->ID);
-		$time  = date('F j, Y', strtotime($item->post_date));
-		$angel = $item->meta['deal_featured'] != '' ? '<span class="angle"></span>' : '';
-		$img   = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'thumbnail') : '<img src="http://placehold.it/95x25/ffdf43/666666" alt="no-photo">';
+		$link     = get_permalink($item->ID);
+		$time     = date('F j, Y', strtotime($item->post_date));
+		$angel    = $item->meta['deal_featured'] != '' ? '<span class="angle"></span>' : '';
+		$subtitle = $item->meta['deal_sub_title'] != '' ? $item->meta['deal_sub_title'] : '';
+		$img      = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'deal-logo-img') : '<img src="http://placehold.it/95x25/ffdf43/666666" alt="no-photo">';
 		?>
 		<article class="a-item adv-t" data-asc="<?php echo $i--; ?>" data-desc="<?php echo $j++; ?>" data-date="<?php echo $item->post_date; ?>" data-title="<?php echo $item->post_title; ?>">			
 			<span class="a-date"><?php echo $time; ?></span>
@@ -465,7 +472,7 @@ function displayDeals($args)
 				<div class="logo">
 					<img alt="" src="http://wp11.miydim.com/wp-content/themes/beringer/images/logo-mark.png"></div>
 				<h3><?php echo $item->meta['deal_cost']; ?></h3>
-				<p>Advise to Seller</p>
+				<p><?php echo $subtitle; ?></p>
 			</div>
 			<div class="col col-logo clm">
 				<img alt="" src="http://wp11.miydim.com/wp-content/themes/beringer/images/logo-mark.png"></div>

@@ -22,9 +22,10 @@ class DealWidget extends WP_Widget{
 		echo $args['before_widget'];
 
 		if ( !empty($instance['title']) ) echo $args['before_title'] . $instance['title'] . $args['after_title'];
-		$link  = get_permalink($deal->ID);
-		$time  = date('F j, Y', strtotime($deal->post_date));
-		$angle = ($deal->meta['deal_featured'] != '') ? '<span class="angle"></span>' : '';
+		$link     = get_permalink($deal->ID);
+		$time     = date('F j, Y', strtotime($deal->post_date));
+		$angle    = ($deal->meta['deal_featured'] != '') ? '<span class="angle"></span>' : '';
+		$subtitle = $deal->meta['deal_sub_title'] != '' ? $deal->meta['deal_sub_title'] : '';
 		?>
 		<article class="a-item adv">
 			<span class="a-date"><?php echo $time; ?></span>
@@ -36,7 +37,7 @@ class DealWidget extends WP_Widget{
 			</div>
 			<div class="info">
 				<h3><?php echo $deal->meta['deal_cost']; ?></h3>
-				<p>Advise to Seller</p>
+				<p><?php echo $subtitle; ?></p>
 			</div>
 			<?php echo $angle; ?>
 		</article>

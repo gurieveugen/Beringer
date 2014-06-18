@@ -2316,3 +2316,7 @@ h1{
 	display:table;
 	clear:both;
 }
+
+.zakaz-biletov{
+  width: 620px;
+}

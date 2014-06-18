@@ -8,7 +8,12 @@
 <?php get_header(); ?>
 <?php 
 $options = $GLOBALS['theme_options']->getAll();
-$fields  = fillArray(array('million_in_aum', 'member_aboard', 'buyouts', 'company_board_sets', 'home_background_image'), $options['options']);
+$fields  = fillArray(array(
+	'first_field_text', 'first_field_value', 
+	'second_field_text', 'second_field_value',
+	'third_field_text', 'third_field_value',
+	'fourth_field_text', 'fourth_field_value',
+	'home_background_image'), $options['options']);
 $imgs    = array(
 	'big'   => '<img src="http://placehold.it/1920x634/ffdf43/666666" alt="Big">',
 	'small' => '<img src="http://placehold.it/480x301/ffdf43/666666" alt="Small">');
@@ -53,26 +58,26 @@ the_post();
 		<tr>
 			<td>
 				<div>
-					<strong><?php echo $million_in_aum; ?></strong>
-					<span>million in AUM</span>
+					<strong><?php echo $first_field_value; ?></strong>
+					<span><?php echo $first_field_text; ?></span>
 				</div>
 			</td>
 			<td>
 				<div>
-					<strong><?php echo $member_aboard; ?></strong>
-					<span>member aboard</span>
+					<strong><?php echo $second_field_value; ?></strong>
+					<span><?php echo $second_field_text; ?></span>
 				</div>
 			</td>
 			<td>
 				<div>
-					<strong><?php echo $buyouts; ?></strong>
-					<span>buyouts</span>
+					<strong><?php echo $third_field_value; ?></strong>
+					<span><?php echo $third_field_text; ?></span>
 				</div>
 			</td>
 			<td>
 				<div>
-					<strong><?php echo $company_board_sets; ?></strong>
-					<span>company board sets</span>
+					<strong><?php echo $fourth_field_value; ?></strong>
+					<span><?php echo $fourth_field_text; ?></span>
 				</div>
 			</td>
 		</tr>
@@ -86,14 +91,18 @@ if($feed_items)
 	<section class="feed-blocks">
 		<div class="wrap cf">
 		<?php
+		$index = 0;
+		$index_classes = array('', '', '', 'hidden-sm', 'visible-lg');
+
 		foreach ($feed_items as &$item) 
 		{
-			$link  = get_permalink($item->ID);
-			$time  = date('F j, Y', strtotime($item->post_date));			
+			$link      = get_permalink($item->ID);
+			$time      = date('F j, Y', strtotime($item->post_date));	
+			$css_class = isset($index_classes[$index]) ? $index_classes[$index] : '';
 			if(isset($item->meta['deal_featured']))
 			{
 				?>
-				<article class="a-item adv">
+				<article class="a-item adv <?php echo $css_class; ?>">
 					<span class="a-date"><?php echo $time; ?></span>
 					<div class="content">
 						<h1><?php echo $item->post_title; ?></h1>
@@ -103,7 +112,7 @@ if($feed_items)
 					</div>
 					<div class="info">
 						<h3><?php echo $item->meta['deal_cost']; ?></h3>
-						<p>Advise to Seller</p>
+						<p><?php echo $item->meta['deal_sub_title']; ?></p>
 					</div>
 					<span class="angle"></span>
 				</article>
@@ -112,11 +121,11 @@ if($feed_items)
 			else
 			{
 				?>
-				<article class="a-item">
+				<article class="a-item <?php echo $css_class; ?>">
 					<span class="a-date"><?php echo $time; ?></span>
 					<div class="content">
 						<h1><?php echo $item->post_title; ?></h1>
-						<p><?php echo wp_trim_words($item->post_content, 12); ?></p>
+						<p><?php echo wp_trim_words($item->post_content, 8); ?></p>
 						<div class="link-holder">
 							<a href="<?php echo $link; ?>" class="link-more">Read more</a>
 						</div>
@@ -124,6 +133,7 @@ if($feed_items)
 				</article>
 				<?php	
 			}	
+			$index++;
 		}
 		?>
 		</div>
