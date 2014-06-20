@@ -17,11 +17,13 @@ if($index == 2)
 	$deal = $GLOBALS['deal']->getItems(array('posts_per_page' => 1));
 	if($deal)
 	{
-		$item = $deal[0];
-		$time = date('F j, Y', strtotime($item->post_date));
-		$link = get_permalink($item->ID);
-		$cost = isset($item->meta['deal_cost']) ? $item->meta['deal_cost'] : '';
-		$img  = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'thumbnail') : '<img src="http://placehold.it/95x25/ffdf43/666666" alt="no-photo">';
+		$item      = $deal[0];
+		$time      = date('F j, Y', strtotime($item->post_date));
+		$link      = get_permalink($item->ID);
+		$cost      = isset($item->meta['deal_cost']) ? $item->meta['deal_cost'] : '';
+		$img       = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'thumbnail-custom') : '<img src="http://placehold.it/95x25/ffdf43/666666" alt="no-photo">';
+		$sub_title = get_post_meta( $item->ID, 'deal_sub_title', true);		
+		$sub_title = $sub_title ? $sub_title : '';
 		?>
 		<article class="a-item adv">
 			<span class="a-date"><?php echo $time; ?></span>
@@ -37,7 +39,7 @@ if($index == 2)
 					<?php echo $img; ?>
 				</div>
 				<h3><?php echo $cost; ?></h3>
-				<p>Advise to Seller</p>
+				<p><?php echo $sub_title; ?></p>
 				<div class="logo hidden-xs">
 					<img alt="" src="http://wp11.miydim.com/wp-content/themes/beringer/images/logo-mark.png">
 				</div>

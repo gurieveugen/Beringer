@@ -48,6 +48,7 @@ add_image_size('services-img', 268, 178, true);
 add_image_size('big-bg-img', 1920, 634, true);
 add_image_size('small-bg-img', 480, 301, true);
 add_image_size('deal-logo-img', 95, 30, false);
+add_image_size('thumbnail-custom', 150, 9999, false);
 
 
 // =========================================================
@@ -500,16 +501,14 @@ function displayServices($args)
 	{
 		ob_start();
 		$link  = get_permalink($item->ID);
-		$img   = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'services-img') : '<img src="http://placehold.it/268x178/ffdf43/666666" alt="no-photo">';
+		$img   = has_post_thumbnail($item->ID) ? get_the_post_thumbnail($item->ID, 'services-img') : '';
 		?>
 		<div class="s-item col-sm-6 col-md-4 cf">
-			<div class="image hidden-xs">
-				<a href="<?php echo $link; ?>">
-					<?php echo $img; ?>
-				</a>
+			<div class="image hidden-xs">				
+				<?php echo $img; ?>				
 			</div>
 			<div class="text">
-				<h3><a href="<?php echo $link; ?>"><?php echo $item->post_title; ?></a></h3>
+				<h3><?php echo $item->post_title; ?></h3>
 				<?php echo getShortText( $item->post_content); ?>
 			</div>
 		</div>
