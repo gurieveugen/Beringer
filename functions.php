@@ -183,11 +183,19 @@ function theme_paging_nav()
 		<div class="nav-links cf">
 
 			<?php if ( get_next_posts_link() ) : ?>
-			<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'theme' ) ); ?></div>
+				<?php if ( is_category('news') ) : ?>
+					<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older news', 'theme' ) ); ?></div>
+				<?php else: ?>
+					<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', 'theme' ) ); ?></div>
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php if ( get_previous_posts_link() ) : ?>
-			<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'theme' ) ); ?></div>
+				<?php if ( is_category('news') ) : ?>
+					<div class="nav-next"><?php previous_posts_link( __( 'Newer news <span class="meta-nav">&rarr;</span>', 'theme' ) ); ?></div>
+				<?php else: ?>
+					<div class="nav-next"><?php previous_posts_link( __( 'Newer posts <span class="meta-nav">&rarr;</span>', 'theme' ) ); ?></div>
+				<?php endif; ?>
 			<?php endif; ?>
 
 		</div><!-- .nav-links -->
