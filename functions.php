@@ -615,6 +615,11 @@ function the_breadcrumb()
 	if (!is_front_page()) 
 	{
 		$out[] = sprintf('<a href="%s">Home</a>', get_option('home'));
+		if(get_post_type() == 'people')
+		{
+			$out[] = sprintf('<a href="%s">People</a>', get_option('home').'our-team/');	
+		}
+		
 		if (is_category() || is_single()) 
 		{			
 			$categories = get_the_category();

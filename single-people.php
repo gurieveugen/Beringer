@@ -15,11 +15,7 @@ if(is_array($meta_arrays )) extract($meta_arrays);
 ?>
 <div class="breadcrumbs-area hidden-xs">
 	<div class="center-wrap cf">
-		<ul class="breadcrumbs">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">About</a></li>
-			<li>Page Name</li>
-		</ul>
+		<?php the_breadcrumb(); ?>
 	</div>
 </div>
 <header class="page-title visible-xs">
