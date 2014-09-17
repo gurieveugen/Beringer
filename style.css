@@ -2023,7 +2023,6 @@ h1{
 }
 .titles h3{
   font: 20px/24px Georgia, 'Times New Roman', Times, serif;
-  color: #611d25;
   margin: 0 0 6px;
 }
 .titles h4{
@@ -2144,10 +2143,12 @@ h1{
   font: 20px/23px Georgia, 'Times New Roman', Times, serif;
 }
 .contact-block{
-  color: #5e1d24;
   font-size: 20px;
   line-height: 29px;
   margin: 0 0 25px;
+}
+.contact-block a{
+  color: #4f4f4f;
 }
 .contact-block h4{
   font-size: 20px;
