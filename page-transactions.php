@@ -5,18 +5,19 @@
 */
 ?>
 <?php get_header(); ?>
+<?php the_post(); ?>
 <div class="breadcrumbs-area hidden-xs">
 	<div class="center-wrap cf">
 		<?php the_breadcrumb(); ?>
 	</div>
 </div>
 <header class="page-title visible-xs">
-	<h1>Transactions</h1>
+	<h1><?php the_title(); ?></h1>
 </header>
 <div class="main-transactions center-wrap">
 	<div class="page-description">
-		<h1 class="p-title hidden-xs">Transactions</h1>
-		<p>Since our start in 2013 we have concluded 50 transactions including divestments, acquisitions, mergers, IPO´s and private placements in a wide variety of industries including Health Care and IT/Telecom where we consider ourselves specialists.</p>
+		<h1 class="p-title hidden-xs"><?php the_title(); ?></h1>
+		<?php the_content(); ?>
 	</div>
 	<div class="filter-row cf">
 		<div class="filter">

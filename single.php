@@ -39,8 +39,7 @@ $title = $cat ? $cat[0]->name : '';
 
 	<section class="news-area hidden-xs">
 		<div class="titles">
-			<h3>OTHER NEWS</h3>
-			<h4><?php echo $other_news_title; ?></h4>
+			<h3>RECENT NEWS</h3>
 		</div>
 		<?php echo do_shortcode('[other_news]'); ?> 		
 	</section>
