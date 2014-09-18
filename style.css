@@ -1470,7 +1470,7 @@ dl, p, h1, h2, h3, h4, h5, h6, applet, embed, object, frameset{
   list-style: none;
   margin: 0;
   padding: 0;
-  background: #6a212a;
+  background: #000;
   position: absolute;
   left: 0;
   top: 70px;
@@ -1812,7 +1812,6 @@ dl, p, h1, h2, h3, h4, h5, h6, applet, embed, object, frameset{
 }
 .page-title h1{
   font: 21px/23px Georgia, 'Times New Roman', Times, serif;
-  color: #641f27;
   text-align: center;
   text-transform: uppercase;
   margin: 0;
