@@ -2096,6 +2096,7 @@ h1{
 }
 .t-item{
   position: relative;
+  height: 350px;
 }
 .t-item img{
   display: block;

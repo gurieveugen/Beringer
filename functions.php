@@ -351,14 +351,14 @@ function displayPeoples()
 	$options = $GLOBALS['theme_options']->getAll();
 	$our_team_quote_1  = isset($options['options']['our_team_quote_1']) ? $options['options']['our_team_quote_1'] : '';	
 	$our_team_quote_2  = isset($options['options']['our_team_quote_2']) ? $options['options']['our_team_quote_2'] : '';	
-	$our_team_quote_1  = '<div class="col-sm-6 col-md-4 hidden-xs">
+	$our_team_quote_1  = '<div class="col-sm-4 col-md-3 hidden-xs">
 				<article class="t-item quote">
 					<div class="dtc">
 						<q>'.$our_team_quote_1.'</q>
 					</div>
 				</article>
 			</div>';	
-	$our_team_quote_2  = '<div class="col-sm-6 col-md-4 hidden-xs">
+	$our_team_quote_2  = '<div class="col-sm-4 col-md-3 hidden-xs">
 				<article class="t-item quote">
 					<div class="dtc">
 						<q>'.$our_team_quote_2.'</q>
@@ -371,7 +371,7 @@ function displayPeoples()
 	{
 		ob_start();
 		?>
-		<div class="col-sm-6 col-md-4">
+		<div class="col-sm-4 col-md-3">
 			<article class="t-item">
 				<a href="<?php echo get_permalink($people->ID); ?>">
 					<?php
@@ -391,7 +391,7 @@ function displayPeoples()
 		$out[] = ob_get_contents();
     	ob_end_clean();
 	}
-	array_splice($out, 2, 0, array($our_team_quote_1));
+	array_splice($out, 3, 0, array($our_team_quote_1));
 	return sprintf('<div class="team-list"><div class="row">%1$s%2$s</div></div>', implode(' ', $out), $our_team_quote_2);
 }
 

@@ -167,10 +167,10 @@ h2{
 	margin: 0 -10px;
 }
 .team-list .t-item{
-	height: 301px;
+	height: 220px;
 }
 .team-list [class^="col-"]{
-	padding: 0 10px 48px;
+	padding: 0 10px 24px;
 }
 /* page team end */
 
