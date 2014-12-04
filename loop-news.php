@@ -20,7 +20,7 @@ if($post->post_type == 'deal')
 		<div class="content">
 			<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 			<?php 
-				the_content(' ');
+				the_excerpt();
 			 ?>
 			<div class="link-holder">
 				<a href="<?php the_permalink(); ?>" class="link-more">More About Deal</a>
@@ -28,7 +28,12 @@ if($post->post_type == 'deal')
 		</div>
 		<div class="info">
 			<div class="logo hidden-xs">
-				<img src="<?php echo TDU; ?>/images/logo-moberq.png" alt="">
+				<?php 
+				if(has_post_thumbnail())
+				{
+					the_post_thumbnail('thumbnail-custom');
+				}
+				?>
 			</div>
 			<h3><?php echo (string) get_post_meta( $post->ID, 'deal_cost', true ); ?></h3>
 			<p><?php echo (string) get_post_meta( $post->ID, 'deal_sub_title', true ); ?></p>
@@ -49,7 +54,7 @@ else
 		<div class="content">
 			<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
 			<?php 
-				the_content(' ');
+				the_excerpt();
 			 ?>
 			<div class="link-holder">
 				<a href="<?php the_permalink(); ?>" class="link-more">Read more</a>
@@ -61,9 +66,7 @@ else
 }
 endwhile; ?>
 </div> <!-- .posts-holder -->
-	
 <?php theme_paging_nav(); ?>
-
 <?php else: ?>
 	
 	<h1 class="page-title"><?php _e( 'Nothing Found', 'theme' ); ?></h1>

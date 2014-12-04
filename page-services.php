@@ -15,7 +15,7 @@
 	<h1><?php the_title(); ?></h1>
 </header>
 <div id="main" class="center-wrap cf">
-	<article id="content" class="main-content">
+	<article id="" class="main-content">
 		<?php if ( has_post_thumbnail() && ! post_password_required() ) : ?>
 		<div class="featured-image">
 			<?php the_post_thumbnail(); ?>

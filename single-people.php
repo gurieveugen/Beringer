@@ -31,7 +31,6 @@ if(is_array($meta_arrays )) extract($meta_arrays);
 			<h4><?php echo $people_position; ?></h4>
 		</div>
 		<div class="contact-block hidden-xs">
-			<h4>Beringer Finance</h4>
 			<address><?php echo $people_adress; ?></address>
 			<strong><a href="mailto:<?php echo $people_email; ?>"><?php echo $people_email; ?></a></strong>
 		</div>
