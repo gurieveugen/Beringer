@@ -571,7 +571,7 @@ h1{
 	display: table;
 	background: #000;
 	color: #fff;
-	font: italic 25px/32px Georgia, 'Times New Roman', Times, serif;
+	font: italic 22px/32px Georgia, 'Times New Roman', Times, serif;
 }
 .t-item.quote .dtc{
 	display: table-cell;
