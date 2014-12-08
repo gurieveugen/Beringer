@@ -42,7 +42,7 @@ the_post();
 	<?php echo $imgs['big']; ?>
 </section>
 <section class="updates-block wrap cf">
-	<a href="<?php echo get_bloginfo('url'); ?>/transactions/" class="btn-updates">
+	<a href="<?php echo get_bloginfo('url'); ?>/deals/" class="btn-updates">
 		<div>
 			<img src="<?php echo TDU; ?>/images/icon.png" alt="">
 			<div class="holder">

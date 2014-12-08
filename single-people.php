@@ -12,6 +12,8 @@ $thumb             = has_post_thumbnail(get_the_ID()) ? get_the_post_thumbnail(g
 if(is_array($meta_texts)) extract($meta_texts);
 if(is_array($meta_arrays )) extract($meta_arrays);
 
+$people_adress = strlen(trim($people_adress)) ? sprintf('<address>%s</address>', $people_adress) : '';
+
 ?>
 <div class="breadcrumbs-area hidden-xs">
 	<div class="center-wrap cf">
@@ -31,7 +33,7 @@ if(is_array($meta_arrays )) extract($meta_arrays);
 			<h4><?php echo $people_position; ?></h4>
 		</div>
 		<div class="contact-block hidden-xs">
-			<address><?php echo $people_adress; ?></address>
+			<?php echo $people_adress; ?>
 			<strong><a href="mailto:<?php echo $people_email; ?>"><?php echo $people_email; ?></a></strong>
 		</div>
 		<div class="contact-block hidden-xs">

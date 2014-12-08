@@ -1612,6 +1612,7 @@ dl, p, h1, h2, h3, h4, h5, h6, applet, embed, object, frameset{
   background-position: -50px 0;
 }
 .link-more{
+  color: #000;
   font: 13px/17px LatoBold, Arial, Helvetica, sans-serif;
 }
 .a-item .link-more{
@@ -2143,9 +2144,9 @@ h1{
   font: 20px/23px Georgia, 'Times New Roman', Times, serif;
 }
 .contact-block{
-  font-size: 20px;
+  font-size: 16px;
   line-height: 29px;
-  margin: 0 0 25px;
+  margin: 0 0 5px;
 }
 .contact-block a{
   color: #4f4f4f;
