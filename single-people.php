@@ -39,12 +39,12 @@ if(is_array($meta_arrays )) extract($meta_arrays);
 			if($people_phones)
 			{
 				?>
-				<h4>Phone:</h4>
+				<!-- <h4>Phone:</h4> -->
 				<dl class="cf contact-list">
 				<?php
 				foreach ($people_phones as &$phone) 
 				{
-					printf('<dt>%s:</dt>', $phone['title']);
+					//printf('<dt>%s:</dt>', $phone['title']);
 					printf('<dd>%s</dd>', $phone['phone']);
 				}
 				?>
